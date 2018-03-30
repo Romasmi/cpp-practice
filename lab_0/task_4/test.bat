@@ -1,12 +1,36 @@
 set PROGRAM="%~1"
 
+rem Empty input
 %PROGRAM%
 if NOT ERRORLEVEL 1 goto error
 
+rem Devision by zero
 %PROGRAM% 1 * 100 / 0
 if NOT ERRORLEVEL 1 goto error
 
-%PROGRAM% 1 * 100 / 2 + 150 > %TEMP%\result.txt
+rem Last Parameter is any operation
+%PROGRAM% 1 * 100 / 0 + 
+if NOT ERRORLEVEL 1 goto error
+
+rem Incorrect input
+%PROGRAM% 1 1 1 1
+if NOT ERRORLEVEL 1 goto error
+
+rem Incorrect input - just numbers
+%PROGRAM% 1 1 1 1
+if NOT ERRORLEVEL 1 goto error
+
+rem Incorrect input - just operation
+%PROGRAM% +
+if NOT ERRORLEVEL 1 goto error
+
+rem Just one parameter
+%PROGRAM% 200 > %TEMP%\result.txt
+if ERRORLEVEL 1 goto error
+fc.exe %TEMP%\result.txt result_200.txt
+if ERRORLEVEL 1 goto error
+
+%PROGRAM% 1 * 100 / 2 + 160 - 10 > %TEMP%\result.txt
 if ERRORLEVEL 1 goto error
 fc.exe %TEMP%\result.txt result_200.txt
 if ERRORLEVEL 1 goto error
