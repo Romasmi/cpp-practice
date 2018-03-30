@@ -30,4 +30,14 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="test.bat">
+      <Filter>Исходные файлы</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="result_200.txt">
+      <Filter>Исходные файлы</Filter>
+    </Text>
+  </ItemGroup>
 </Project>
