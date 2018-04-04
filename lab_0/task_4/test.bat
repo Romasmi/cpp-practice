@@ -16,20 +16,13 @@ rem Incorrect input
 %PROGRAM% 1 1 1 1
 if NOT ERRORLEVEL 1 goto error
 
-rem Incorrect input - just numbers
-%PROGRAM% 1 1 1 1
-if NOT ERRORLEVEL 1 goto error
-
-rem Incorrect input - just operation
-%PROGRAM% +
-if NOT ERRORLEVEL 1 goto error
-
-rem Just one parameter
+rem Just one parameter - number
 %PROGRAM% 200 > %TEMP%\result.txt
 if ERRORLEVEL 1 goto error
 fc.exe %TEMP%\result.txt result_200.txt
 if ERRORLEVEL 1 goto error
 
+rem Correct expression
 %PROGRAM% 1 * 100 / 2 + 160 - 10 > %TEMP%\result.txt
 if ERRORLEVEL 1 goto error
 fc.exe %TEMP%\result.txt result_200.txt
