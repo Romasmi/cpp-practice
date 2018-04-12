@@ -43,7 +43,7 @@
     <Text Include="16_2_255.txt">
       <Filter>Source Files</Filter>
     </Text>
-    <Text Include="16_2_miuns_255.txt">
+    <Text Include="16_2_minus_255.txt">
       <Filter>Source Files</Filter>
     </Text>
   </ItemGroup>

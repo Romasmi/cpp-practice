@@ -190,7 +190,7 @@
   <ItemGroup>
     <Text Include="10_10_10.txt" />
     <Text Include="16_2_255.txt" />
-    <Text Include="16_2_miuns_255.txt" />
+    <Text Include="16_2_minus_255.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
