@@ -46,5 +46,6 @@
     <Text Include="16_2_minus_255.txt">
       <Filter>Source Files</Filter>
     </Text>
+    <Text Include="10_11_0.txt" />
   </ItemGroup>
 </Project>
