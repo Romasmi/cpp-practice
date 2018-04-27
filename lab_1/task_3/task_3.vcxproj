@@ -194,6 +194,7 @@
     <Text Include="matrix.txt" />
     <Text Include="matrix_3_3.txt" />
     <Text Include="matrix_3_3_inverted.txt" />
+    <Text Include="one_number.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -12,6 +12,10 @@ rem Incorrect matrix
 %PROGRAM% incorrect_matrix.txt
 IF NOT ERRORLEVEL 1 goto error
 
+rem Just one number
+%PROGRAM% one_number.txt
+IF NOT ERRORLEVEL 1 goto error
+
 rem Irregular matrix
 %PROGRAM% irregular_matrix.txt
 IF NOT ERRORLEVEL 1 goto error

@@ -55,5 +55,8 @@
     <Text Include="matrix_3_3_inverted.txt">
       <Filter>Source Files</Filter>
     </Text>
+    <Text Include="one_number.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
