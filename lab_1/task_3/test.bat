@@ -15,41 +15,13 @@ IF NOT ERRORLEVEL 1 goto error
 rem Irregular matrix
 %PROGRAM% irregular_matrix.txt
 IF NOT ERRORLEVEL 1 goto error
-goto good
 
-rem Non conformity of input radix and input number
-%PROGRAM% 10 11 Ff
-IF NOT ERRORLEVEL 1 goto error
-
-rem Input number overflow
-%PROGRAM% 10 16 1234567891145655645
-IF NOT ERRORLEVEL 1 goto error	
-
-rem Equal radix
-%PROGRAM% 10 10 10 > %TEMP%\output.txt
+rem Correct matrix 3*3
+%PROGRAM% matrix_3_3.txt > %TEMP%\output.txt
 IF ERRORLEVEL 1 goto error
-fc.exe 10_10_10.txt %TEMP%\output.txt
+fc.exe matrix_3_3_inverted.txt %TEMP%\output.txt
 IF ERRORLEVEL 1 goto error
 
-rem Convert zero
-%PROGRAM% 10 11 0 > %TEMP%\output.txt
-IF ERRORLEVEL 1 goto error
-fc.exe 10_11_0.txt %TEMP%\output.txt
-IF ERRORLEVEL 1 goto error
-
-rem Correct input
-%PROGRAM% 16 2 fF > %TEMP%\output.txt
-IF ERRORLEVEL 1 goto error
-fc.exe 16_2_255.txt %TEMP%\output.txt
-IF ERRORLEVEL 1 goto error
-
-rem Correct negaive input number
-%PROGRAM% 16 2 -Ff > %TEMP%\output.txt
-IF ERRORLEVEL 1 goto error
-fc.exe 16_2_minus_255.txt %TEMP%\output.txt
-IF ERRORLEVEL 1 goto error
-
-:good
 echo Program testing succeded
 exit 0
 

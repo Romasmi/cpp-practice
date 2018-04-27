@@ -49,5 +49,11 @@
     <Text Include="incorrect_matrix.txt">
       <Filter>Source Files</Filter>
     </Text>
+    <Text Include="matrix_3_3.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="matrix_3_3_inverted.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

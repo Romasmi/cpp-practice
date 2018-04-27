@@ -96,8 +96,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>test.bat "$(TargetPath)"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Running tests</Message>
@@ -117,8 +116,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>test.bat "$(TargetPath)"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Running tests</Message>
@@ -142,8 +140,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>test.bat "$(TargetPath)"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Running tests</Message>
@@ -167,8 +164,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>test.bat "$(TargetPath)"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Running tests</Message>
@@ -196,6 +192,8 @@
     <Text Include="incorrect_matrix.txt" />
     <Text Include="irregular_matrix.txt" />
     <Text Include="matrix.txt" />
+    <Text Include="matrix_3_3.txt" />
+    <Text Include="matrix_3_3_inverted.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
