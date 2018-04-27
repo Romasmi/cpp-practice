@@ -32,9 +32,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />
+    <None Include="test.bat">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="matrix.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="empty.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="irregular_matrix.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="incorrect_matrix.txt">
       <Filter>Source Files</Filter>
     </Text>
   </ItemGroup>
