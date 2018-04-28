@@ -190,6 +190,7 @@
   <ItemGroup>
     <Text Include="10_10_10.txt" />
     <Text Include="10_11_0.txt" />
+    <Text Include="16_10_FFFFFFFF.txt" />
     <Text Include="16_2_255.txt" />
     <Text Include="16_2_minus_255.txt" />
   </ItemGroup>

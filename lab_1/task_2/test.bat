@@ -38,6 +38,12 @@ IF ERRORLEVEL 1 goto error
 fc.exe 16_2_255.txt %TEMP%\output.txt
 IF ERRORLEVEL 1 goto error
 
+rem Convert max unsigned int
+%PROGRAM% 16 10 FFFFFFFF > %TEMP%\output.txt
+IF ERRORLEVEL 1 goto error
+fc.exe 16_10_FFFFFFFF.txt %TEMP%\output.txt
+IF ERRORLEVEL 1 goto error
+
 rem Correct negaive input number
 %PROGRAM% 16 2 -Ff > %TEMP%\output.txt
 IF ERRORLEVEL 1 goto error

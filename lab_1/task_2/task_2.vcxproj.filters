@@ -47,5 +47,8 @@
       <Filter>Source Files</Filter>
     </Text>
     <Text Include="10_11_0.txt" />
+    <Text Include="16_10_FFFFFFFF.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
