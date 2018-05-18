@@ -10,6 +10,10 @@ bool SetVectorFromStream(BaseVector& vector, istream& input)
 		string currentLine;
 		while (getline(input, currentLine))
 		{
+			if (currentLine.empty())
+			{
+				continue;
+			}
 			istringstream stream(currentLine);
 			double number;
 			while (stream >> number)
@@ -42,6 +46,11 @@ void MultiplyVectorByScalar(BaseVector& vector, const double scalar)
 void ProcessVector(BaseVector& vector)
 {
 	/*Разделить элементы массива на половину максимального элемента*/
+	if (vector.size() == 0)
+	{
+		return;
+	}
+
 	double maxElement = *max_element(vector.begin(), vector.end());
 	if (maxElement != 0)
 	{
