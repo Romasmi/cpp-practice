@@ -3,31 +3,10 @@
 using namespace std;
 using BaseVector = vector<double>;
 
-bool SetVectorFromStream(BaseVector& vector, istream& input)
+BaseVector GetVectorFromStream(istream& input)
 {
-	try
-	{
-		string currentLine;
-		while (getline(input, currentLine))
-		{
-			if (currentLine.empty())
-			{
-				continue;
-			}
-			istringstream stream(currentLine);
-			double number;
-			while (stream >> number)
-			{
-				vector.push_back(number);
-			}
-		}
-		return true;
-	}
-	catch (const exception& e)
-	{
-		cout << e.what() << endl;
-		return false;
-	}
+	BaseVector numbers(istream_iterator<double>(cin), (istream_iterator<double>()));
+	return numbers;
 }
 
 void PrintVector(const BaseVector& vector)
@@ -39,14 +18,18 @@ void PrintVector(const BaseVector& vector)
 
 void MultiplyVectorByScalar(BaseVector& vector, const double scalar)
 {
+	if (vector.size() == 0)
+	{
+		return;
+	}
+
 	transform(vector.begin(), vector.end(), vector.begin(),
 		[scalar](double item) { return item * scalar; });
 }
 
 void ProcessVector(BaseVector& vector)
 {
-	/*Разделить элементы массива на половину максимального элемента*/
-	if (vector.size() == 0)
+	if (vector.empty())
 	{
 		return;
 	}
