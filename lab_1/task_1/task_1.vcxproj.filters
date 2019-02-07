@@ -7,7 +7,7 @@
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
@@ -15,42 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
+    <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="task_1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="test.bat">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include=".clang-format" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="sonnete_17_by_shakespeare.txt">
-      <Filter>Source Files</Filter>
-    </Text>
-    <Text Include="sonnete_17_by_shakespeare_updated.txt">
-      <Filter>Source Files</Filter>
-    </Text>
-    <Text Include="temp.txt">
-      <Filter>Source Files</Filter>
-    </Text>
-    <Text Include="sonnete_17_by_shakespeare_one_line.txt">
-      <Filter>Source Files</Filter>
-    </Text>
-    <Text Include="sonnete_17_by_shakespeare_one_line_updated.txt">
-      <Filter>Source Files</Filter>
-    </Text>
   </ItemGroup>
 </Project>
