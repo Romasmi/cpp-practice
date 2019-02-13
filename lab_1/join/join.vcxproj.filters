@@ -27,4 +27,26 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="test.bat">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="empty.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="temp.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="empty.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="lorem.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="dolor.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+  </ItemGroup>
 </Project>
