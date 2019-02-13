@@ -2,7 +2,6 @@ set PROGRAM="%~1"
 
 rem Too few arguments
 %PROGRAM%
-%PROGRAM% test.bin
 if NOT ERRORLEVEL 1 goto error
 
 rem Not existing input files
