@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.clang-format = .clang-format
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crypt", "crypt\crypt.vcxproj", "{34C9CB4C-5790-4F63-AC76-4139D295FF33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -46,6 +48,14 @@ Global
 		{39147D06-5488-447C-9DB0-C18AECA00AF2}.Release|x64.Build.0 = Release|x64
 		{39147D06-5488-447C-9DB0-C18AECA00AF2}.Release|x86.ActiveCfg = Release|Win32
 		{39147D06-5488-447C-9DB0-C18AECA00AF2}.Release|x86.Build.0 = Release|Win32
+		{34C9CB4C-5790-4F63-AC76-4139D295FF33}.Debug|x64.ActiveCfg = Debug|x64
+		{34C9CB4C-5790-4F63-AC76-4139D295FF33}.Debug|x64.Build.0 = Debug|x64
+		{34C9CB4C-5790-4F63-AC76-4139D295FF33}.Debug|x86.ActiveCfg = Debug|Win32
+		{34C9CB4C-5790-4F63-AC76-4139D295FF33}.Debug|x86.Build.0 = Debug|Win32
+		{34C9CB4C-5790-4F63-AC76-4139D295FF33}.Release|x64.ActiveCfg = Release|x64
+		{34C9CB4C-5790-4F63-AC76-4139D295FF33}.Release|x64.Build.0 = Release|x64
+		{34C9CB4C-5790-4F63-AC76-4139D295FF33}.Release|x86.ActiveCfg = Release|Win32
+		{34C9CB4C-5790-4F63-AC76-4139D295FF33}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
