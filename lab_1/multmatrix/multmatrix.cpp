@@ -75,11 +75,11 @@ bool Multiply(const Matrix &matrix1, const Matrix &matrix2, Matrix &result)
 	}
 
 	return true;
-}
+} 
 
 void PrintMatrix(const Matrix &matrix, const unsigned int precision = 3)
 {
-	cout.precision(precision);
+	setprecision(precision);
 	for (const MatrixRow row : matrix)
 	{
 		copy(row.begin(), row.end(), ostream_iterator<MatrixCell>(cout, " "));

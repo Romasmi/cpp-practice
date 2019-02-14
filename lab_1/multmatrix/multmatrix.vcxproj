@@ -178,6 +178,8 @@
     <None Include="test.bat" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="1x1_matrix_result.txt" />
+    <Text Include="1x1_matrix.txt" />
     <Text Include="2x3-3x3_matrix_result.txt" />
     <Text Include="2x3_matrix.txt" />
     <Text Include="empty.txt" />

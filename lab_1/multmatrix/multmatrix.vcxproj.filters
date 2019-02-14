@@ -54,5 +54,11 @@
     <Text Include="2x3-3x3_matrix_result.txt">
       <Filter>Source Files\test_files</Filter>
     </Text>
+    <Text Include="1x1_matrix.txt">
+      <Filter>Source Files\test_files</Filter>
+    </Text>
+    <Text Include="1x1_matrix_result.txt">
+      <Filter>Source Files\test_files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

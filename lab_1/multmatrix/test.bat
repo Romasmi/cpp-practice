@@ -14,6 +14,15 @@ rem IncorrectMatrix
 %PROGRAM% incorrect_matrix.txt matrix.txt
 if NOT ERRORLEVEL 1 goto error
 
+rem Columns count  is not equal to rows count
+%PROGRAM%  3x3_matrix.txt 2x3_matrix.txt > %TEMP%\result.txt
+if NOT ERRORLEVEL 1 goto error
+
+rem One cell matrix
+%PROGRAM% 1x1_matrix.txt 1x1_matrix.txt > %TEMP%\result.txt
+fc %TEMP%\result.txt 1x1_matrix_result.txt
+if ERRORLEVEL 1 goto error
+
 rem Correct quad matrix by equal matrix
 %PROGRAM% 3x3_matrix.txt 3x3_matrix.txt > %TEMP%\result.txt
 fc %TEMP%\result.txt 3x3_matrix_result.txt
