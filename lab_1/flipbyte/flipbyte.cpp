@@ -6,12 +6,13 @@ const unsigned char BITS_IN_HALF_OF_NUMBER = NUMBER_SIZE_IN_BITS / 2;
 const unsigned char MIN_NUMBER = 0;
 const unsigned char MAX_NUMBER = 255;
 
-template <class T> bool Between(const T item, const T min, const T max)
+template <class T>
+bool Between(const T item, const T min, const T max)
 {
 	return item >= min && item <= max;
 }
 
-void FlipByte(unsigned char &number)
+void FlipByte(unsigned char& number)
 {
 	number = number << BITS_IN_HALF_OF_NUMBER | number >> BITS_IN_HALF_OF_NUMBER;
 }
@@ -29,7 +30,7 @@ bool IsValidParams(const unsigned int argc, const char* argv[])
 	{
 		number = stoul(argv[1]);
 	}
-	catch (const exception &e)
+	catch (const exception& e)
 	{
 		cout << e.what() << "\n";
 		return false;

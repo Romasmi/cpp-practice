@@ -7,7 +7,7 @@ using MatrixCell = double;
 using MatrixRow = vector<MatrixCell>;
 using Matrix = vector<MatrixRow>;
 
-bool IsEquialBoundaryRowsSize(const Matrix &matrix)
+bool IsEquialBoundaryRowsSize(const Matrix& matrix)
 {
 	return matrix.front().size() == matrix.back().size();
 }
@@ -43,17 +43,17 @@ bool SetMatrix(const string& filename, Matrix& matrix)
 	return input.is_open() && SetMatrix(input, matrix);
 }
 
-MatrixCell MulptiplyRowByColumn(const MatrixRow &row, const Matrix &matrix, const size_t columnNumber)
+MatrixCell MulptiplyRowByColumn(const MatrixRow& row, const Matrix& matrix, const size_t columnNumber)
 {
 	MatrixCell result = 0;
-	for (size_t i = 0; i < row.size();  ++i)
+	for (size_t i = 0; i < row.size(); ++i)
 	{
 		result += row[i] * matrix[i][columnNumber];
 	}
 	return result;
 }
 
-bool Multiply(const Matrix &matrix1, const Matrix &matrix2, Matrix &result)
+bool Multiply(const Matrix& matrix1, const Matrix& matrix2, Matrix& result)
 {
 	if (matrix1.front().size() != matrix2.size())
 	{
@@ -68,16 +68,16 @@ bool Multiply(const Matrix &matrix1, const Matrix &matrix2, Matrix &result)
 		MatrixRow row(columnsCount);
 		fill(row.begin(), row.end(), 0);
 		for (size_t j = 0; j < columnsCount; ++j)
-		{ 
+		{
 			row[j] = MulptiplyRowByColumn(matrix1[i], matrix2, j);
 		}
-		result.push_back(row); 
+		result.push_back(row);
 	}
 
 	return true;
-} 
+}
 
-void PrintMatrix(const Matrix &matrix, const unsigned int precision = 3)
+void PrintMatrix(const Matrix& matrix, const unsigned int precision = 3)
 {
 	setprecision(precision);
 	for (const MatrixRow row : matrix)
@@ -99,9 +99,7 @@ int main(const unsigned int argc, const char* argv[])
 	Matrix matrix2;
 	Matrix result;
 
-	if (SetMatrix(string(argv[1]), matrix1) &&
-		SetMatrix(string(argv[2]), matrix2) &&
-		Multiply(matrix1, matrix2, result))
+	if (SetMatrix(string(argv[1]), matrix1) && SetMatrix(string(argv[2]), matrix2) && Multiply(matrix1, matrix2, result))
 	{
 		PrintMatrix(result);
 		return 0;

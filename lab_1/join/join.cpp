@@ -15,7 +15,7 @@ FilesList GetFiles(const char* argv[], const unsigned int count)
 	return files;
 }
 
-bool Join(const FilesList &filesList, const string &outFileName)
+bool Join(const FilesList& filesList, const string& outFileName)
 {
 	ofstream outFile(outFileName, ios_base::binary | ios_base::out);
 	if (!outFile.is_open())
@@ -24,7 +24,7 @@ bool Join(const FilesList &filesList, const string &outFileName)
 	}
 
 	for (const string fileName : filesList)
-	{ 
+	{
 		ifstream inFile(fileName, ios_base::binary | ios_base::in);
 		if (inFile.is_open())
 		{
@@ -32,10 +32,10 @@ bool Join(const FilesList &filesList, const string &outFileName)
 			while ((code = inFile.get()) != EOF)
 			{
 				outFile.put(code);
-			}  
+			}
 			inFile.close();
-		} 
-		else 
+		}
+		else
 		{
 			return false;
 		}
@@ -43,16 +43,14 @@ bool Join(const FilesList &filesList, const string &outFileName)
 	return true;
 }
 
-
 int main(const unsigned int argc, const char* argv[])
 {
 	if (argc < MIN_ARGS_COUNT)
 	{
 		return 1;
-	} 
+	}
 
 	FilesList filesList = GetFiles(argv, argc);
 	string outFileName = argv[argc - 1];
 	return Join(filesList, outFileName) ? 0 : 1;
 }
-  
