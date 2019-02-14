@@ -33,6 +33,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="flipped_255.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="flipped_0.txt">
+      <Filter>Source Files</Filter>
+    </Text>
     <Text Include="flipped_8.txt">
       <Filter>Source Files</Filter>
     </Text>

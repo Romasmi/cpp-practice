@@ -2,7 +2,6 @@
 using namespace std;
 const unsigned int ARGS_COUNT = 2;
 const unsigned char NUMBER_SIZE_IN_BITS = 8;
-const unsigned char BITS_IN_HALF_OF_NUMBER = NUMBER_SIZE_IN_BITS / 2;
 const unsigned char MIN_NUMBER = 0;
 const unsigned char MAX_NUMBER = 255;
 
@@ -14,10 +13,17 @@ bool Between(const T item, const T min, const T max)
 
 void FlipByte(unsigned char& number)
 {
-	number = number << BITS_IN_HALF_OF_NUMBER | number >> BITS_IN_HALF_OF_NUMBER;
+	unsigned char flippedNumber = 0;
+	for (size_t i = 0; i < NUMBER_SIZE_IN_BITS; ++i)
+	{
+		flippedNumber = flippedNumber << 1;
+		flippedNumber = flippedNumber | (number & 0x01);
+		number = number >> 1;
+	}
+	number = flippedNumber;
 }
 
-bool IsValidParams(int argc, char* argv[])
+bool ParseCommandLine(int argc, char* argv[], unsigned char &number)
 {
 	if (argc != ARGS_COUNT)
 	{
@@ -25,10 +31,10 @@ bool IsValidParams(int argc, char* argv[])
 		return false;
 	}
 
-	unsigned int number;
+	unsigned int parsedNumber;
 	try
 	{
-		number = stoul(argv[1]);
+		parsedNumber = stoul(argv[1]);
 	}
 	catch (const exception& e)
 	{
@@ -36,18 +42,26 @@ bool IsValidParams(int argc, char* argv[])
 		return false;
 	}
 
-	return Between<unsigned int>(number, MIN_NUMBER, MAX_NUMBER);
+	if (Between<unsigned int>(parsedNumber, MIN_NUMBER, MAX_NUMBER))
+	{
+		number = static_cast<unsigned char>(parsedNumber);
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 int main(int argc, char* argv[])
 {
-	if (!IsValidParams(argc, argv))
+	unsigned char numberToFlipBytes;
+	if (!ParseCommandLine(argc, argv, numberToFlipBytes))
 	{
 		cout << "Invalid params\n"; 
 		return 1;
 	} 
 
-	unsigned char numberToFlipBytes = static_cast<unsigned char>(stoul(argv[1]));
 	FlipByte(numberToFlipBytes);
 	cout << static_cast<unsigned int>(numberToFlipBytes) << "\n";
 	return 0;
