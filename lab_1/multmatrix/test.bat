@@ -15,11 +15,14 @@ rem IncorrectMatrix
 if NOT ERRORLEVEL 1 goto error
 
 rem Correct quad matrix by equal matrix
-%PROGRAM% 4x4_matrix.txt 4x4_matrix.txt > %TEMP%\result.txt
-fc %TEMP%\result.txt 4x4_matrix_result.txt
+%PROGRAM% 3x3_matrix.txt 3x3_matrix.txt > %TEMP%\result.txt
+fc %TEMP%\result.txt 3x3_matrix_result.txt
 if ERRORLEVEL 1 goto error
 
-rem Correct 4*2 matrix by 4*4 matrix
+rem Correct 3*2 matrix by 3*3 matrix
+%PROGRAM% 2x3_matrix.txt 3x3_matrix.txt > %TEMP%\result.txt
+fc %TEMP%\result.txt 2x3-3x3_matrix_result.txt
+if ERRORLEVEL 1 goto error
 
 echo OK
 exit 0

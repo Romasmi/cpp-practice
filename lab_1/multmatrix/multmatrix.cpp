@@ -28,7 +28,7 @@ bool SetMatrix(istream& input, Matrix& matrix)
 			}
 		}
 
-		return matrix.size() != 0; 
+		return matrix.size() != 0;
 	}
 	catch (const exception& e)
 	{
@@ -43,24 +43,37 @@ bool SetMatrix(const string& filename, Matrix& matrix)
 	return input.is_open() && SetMatrix(input, matrix);
 }
 
+MatrixCell MulptiplyRowByColumn(const MatrixRow &row, const Matrix &matrix, const size_t columnNumber)
+{
+	MatrixCell result = 0;
+	for (size_t i = 0; i < row.size();  ++i)
+	{
+		result += row[i] * matrix[i][columnNumber];
+	}
+	return result;
+}
+
 bool Multiply(const Matrix &matrix1, const Matrix &matrix2, Matrix &result)
 {
-	if (matrix1.size() != matrix2.front().size())
+	if (matrix1.front().size() != matrix2.size())
 	{
 		return false;
 	}
 
-	const size_t size = matrix1.size();
-	for (size_t i = 0; i < size; ++i)
+	const size_t rowsCount = matrix1.size();
+	const size_t columnsCount = matrix2.front().size();
+
+	for (size_t i = 0; i < rowsCount; ++i)
 	{
-		MatrixRow row(size);
-		row[i] = 0;
-		for (size_t j = 0; j < size; ++j)
-		{
-			row[i] += matrix1[i][j] * matrix2[j][i];
+		MatrixRow row(columnsCount);
+		fill(row.begin(), row.end(), 0);
+		for (size_t j = 0; j < columnsCount; ++j)
+		{ 
+			row[j] = MulptiplyRowByColumn(matrix1[i], matrix2, j);
 		}
-		result.push_back(row);
+		result.push_back(row); 
 	}
+
 	return true;
 }
 
@@ -80,7 +93,7 @@ int main(const unsigned int argc, const char* argv[])
 	{
 		cout << "Invalid params count\n";
 		return 1;
-	} 
+	}
 
 	Matrix matrix1;
 	Matrix matrix2;
