@@ -21,13 +21,11 @@ bool SetMatrix(istream& input, Matrix& matrix)
 		{
 			istringstream stringIterator(currentLine);
 			matrix.push_back(MatrixRow(istream_iterator<MatrixCell>(stringIterator), istream_iterator<MatrixCell>()));
-
 			if (!IsEquialBoundaryRowsSize(matrix))
 			{
 				return false;
 			}
 		}
-
 		return matrix.size() != 0;
 	}
 	catch (const exception& e)
@@ -66,7 +64,6 @@ bool Multiply(const Matrix& matrix1, const Matrix& matrix2, Matrix& result)
 	for (size_t i = 0; i < rowsCount; ++i)
 	{
 		MatrixRow row(columnsCount);
-		fill(row.begin(), row.end(), 0);
 		for (size_t j = 0; j < columnsCount; ++j)
 		{
 			row[j] = MulptiplyRowByColumn(matrix1[i], matrix2, j);
@@ -80,14 +77,14 @@ bool Multiply(const Matrix& matrix1, const Matrix& matrix2, Matrix& result)
 void PrintMatrix(const Matrix& matrix, const unsigned int precision = 3)
 {
 	setprecision(precision);
-	for (const MatrixRow row : matrix)
+	for (const MatrixRow &row : matrix)
 	{
 		copy(row.begin(), row.end(), ostream_iterator<MatrixCell>(cout, " "));
 		cout << "\n";
 	}
 }
 
-int main(const unsigned int argc, const char* argv[])
+int main(int argc, char* argv[])
 {
 	if (argc != PARAMS_COUNT)
 	{
@@ -99,7 +96,9 @@ int main(const unsigned int argc, const char* argv[])
 	Matrix matrix2;
 	Matrix result;
 
-	if (SetMatrix(string(argv[1]), matrix1) && SetMatrix(string(argv[2]), matrix2) && Multiply(matrix1, matrix2, result))
+	if (SetMatrix(string(argv[1]), matrix1) && 
+		SetMatrix(string(argv[2]), matrix2) && 
+		Multiply(matrix1, matrix2, result))
 	{
 		PrintMatrix(result);
 		return 0;
