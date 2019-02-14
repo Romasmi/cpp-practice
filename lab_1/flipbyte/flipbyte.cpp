@@ -17,7 +17,7 @@ void FlipByte(unsigned char& number)
 	number = number << BITS_IN_HALF_OF_NUMBER | number >> BITS_IN_HALF_OF_NUMBER;
 }
 
-bool IsValidParams(const unsigned int argc, const char* argv[])
+bool IsValidParams(int argc, char* argv[])
 {
 	if (argc != ARGS_COUNT)
 	{
@@ -36,25 +36,19 @@ bool IsValidParams(const unsigned int argc, const char* argv[])
 		return false;
 	}
 
-	if (!Between<unsigned int>(number, MIN_NUMBER, MAX_NUMBER))
-	{
-		cout << "Number out  of range " << MIN_NUMBER << ".." << MAX_NUMBER << "\n";
-		return false;
-	}
-
-	return true;
+	return Between<unsigned int>(number, MIN_NUMBER, MAX_NUMBER);
 }
 
-int main(const unsigned int argc, const char* argv[])
+int main(int argc, char* argv[])
 {
 	if (!IsValidParams(argc, argv))
 	{
+		cout << "Invalid params\n"; 
 		return 1;
-	}
+	} 
 
-	unsigned char numberToFlipBytes = static_cast<unsigned char>(stoi(argv[1]));
+	unsigned char numberToFlipBytes = static_cast<unsigned char>(stoul(argv[1]));
 	FlipByte(numberToFlipBytes);
 	cout << static_cast<unsigned int>(numberToFlipBytes) << "\n";
-
 	return 0;
 }
