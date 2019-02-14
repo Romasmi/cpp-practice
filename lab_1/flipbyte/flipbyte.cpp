@@ -27,7 +27,6 @@ bool ParseCommandLine(int argc, char* argv[], unsigned char &number)
 {
 	if (argc != ARGS_COUNT)
 	{
-		cout << "Invalid parametes count\n";
 		return false;
 	}
 
