@@ -5,10 +5,10 @@ using FilesList = vector<string>;
 const unsigned int MIN_ARGS_COUNT = 3;
 const unsigned int bufferSize = 100;
 
-FilesList GetFiles(const char* argv[], const unsigned int count)
+FilesList GetFiles(char* argv[], const int count)
 {
 	FilesList files;
-	for (unsigned int i = 1; i < count - 1; ++i)
+	for (int i = 1; i < count - 1; ++i)
 	{
 		files.push_back(argv[i]);
 	}
@@ -23,17 +23,16 @@ bool Join(const FilesList& filesList, const string& outFileName)
 		return false;
 	}
 
-	for (const string fileName : filesList)
+	for (const string &fileName : filesList)
 	{
 		ifstream inFile(fileName, ios_base::binary | ios_base::in);
 		if (inFile.is_open())
 		{
-			unsigned int code;
-			while ((code = inFile.get()) != EOF)
+			char code;
+			while (inFile.get(code))
 			{
 				outFile.put(code);
 			}
-			inFile.close();
 		}
 		else
 		{
@@ -43,7 +42,7 @@ bool Join(const FilesList& filesList, const string& outFileName)
 	return true;
 }
 
-int main(const unsigned int argc, const char* argv[])
+int main(int argc, char* argv[])
 {
 	if (argc < MIN_ARGS_COUNT)
 	{

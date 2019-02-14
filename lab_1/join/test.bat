@@ -8,6 +8,10 @@ rem Not existing input files
 %PROGRAM% test1.bin test2.bin out.bin
 if NOT ERRORLEVEL 1 goto error
 
+rem Not correct output file
+%PROGRAM% empty.txt %TEMP%\4564564\out.bin
+if NOT ERRORLEVEL 1 goto error
+
 rem Merge one empty file
 %PROGRAM% empty.txt %TEMP%\out.txt
 if ERRORLEVEL 1 goto error
