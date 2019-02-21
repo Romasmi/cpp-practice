@@ -94,7 +94,7 @@ bool IsValidMap(Map& map)
 
 char GetNeightbouhsCount(const Map& map, const size_t y, const size_t x, size_t width, size_t height)
 {
-	unsigned char count = 0;
+	unsigned int count = 0;
 	const size_t yBegin = y == 1 ? 1 : y - 1;
 	const size_t yEnd = y == height - 2 ? height - 2 : y + 1;
 	const size_t xBegin = x == 1 ? 1 : x - 1;

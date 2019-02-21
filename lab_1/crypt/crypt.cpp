@@ -109,6 +109,11 @@ bool IsValidParams(int argc, char* argv[])
 		return false;
 	}
 
+	if (CommandToCryptFunction(argv[1]) == nullptr)
+	{
+		return false;
+	}
+
 	uint8_t key;
 	try
 	{
@@ -132,7 +137,8 @@ int main(int argc, char* argv[])
 {
 	if (!IsValidParams(argc, argv))
 	{
-		cout << "Invalid params. Correct params: crypt.txt <crypt way: encrypt|decrypt> <input_file> [<output_file>]\n";
+		cout << "Invalid params."
+			 << "Correct params: crypt.txt <crypt way: encrypt|decrypt> <input_file> <output_file> <key from 0 to 255>\n";
 		return 1;
 	}
 
