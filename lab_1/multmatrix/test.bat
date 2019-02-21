@@ -14,7 +14,7 @@ rem IncorrectMatrix
 %PROGRAM% incorrect_matrix.txt matrix.txt
 if NOT ERRORLEVEL 1 goto error
 
-rem Columns count  is not equal to rows count
+rem Columns count is not equal to rows count
 %PROGRAM%  3x3_matrix.txt 2x3_matrix.txt > %TEMP%\result.txt
 if NOT ERRORLEVEL 1 goto error
 

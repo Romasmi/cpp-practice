@@ -7,12 +7,12 @@ using MatrixCell = double;
 using MatrixRow = vector<MatrixCell>;
 using Matrix = vector<MatrixRow>;
 
-bool IsEquialBoundaryRowsSize(const Matrix& matrix)
+bool IsEqualBoundaryRowsSize(const Matrix& matrix)
 {
 	return matrix.front().size() == matrix.back().size();
 }
 
-bool SetMatrix(istream& input, Matrix& matrix)
+bool LoadMatrixFromStream(istream& input, Matrix& matrix)
 {
 	try
 	{
@@ -21,7 +21,7 @@ bool SetMatrix(istream& input, Matrix& matrix)
 		{
 			istringstream stringIterator(currentLine);
 			matrix.push_back(MatrixRow(istream_iterator<MatrixCell>(stringIterator), istream_iterator<MatrixCell>()));
-			if (!IsEquialBoundaryRowsSize(matrix))
+			if (!IsEqualBoundaryRowsSize(matrix))
 			{
 				return false;
 			}
@@ -35,10 +35,10 @@ bool SetMatrix(istream& input, Matrix& matrix)
 	}
 }
 
-bool SetMatrix(const string& filename, Matrix& matrix)
+bool LoadMatrixFromFile(const string& filename, Matrix& matrix)
 {
 	ifstream input(filename);
-	return input.is_open() && SetMatrix(input, matrix);
+	return input.is_open() && LoadMatrixFromStream(input, matrix);
 }
 
 MatrixCell MulptiplyRowByColumn(const MatrixRow& row, const Matrix& matrix, const size_t columnNumber)
@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
 {
 	if (argc != PARAMS_COUNT)
 	{
-		cout << "Invalid params count\n";
+		cout << "Invalid params. Correct params: mmultmatrix.exe <matrix1_file> <matrix2_file>\n";
 		return 1;
 	}
 
@@ -96,8 +96,8 @@ int main(int argc, char* argv[])
 	Matrix matrix2;
 	Matrix result;
 
-	if (SetMatrix(string(argv[1]), matrix1) && 
-		SetMatrix(string(argv[2]), matrix2) && 
+	if (LoadMatrixFromFile(string(argv[1]), matrix1) && 
+		LoadMatrixFromFile(string(argv[2]), matrix2) && 
 		Multiply(matrix1, matrix2, result))
 	{
 		PrintMatrix(result);
