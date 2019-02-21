@@ -28,7 +28,7 @@ bool Between(T item, T min, T max)
 	return item >= min && item <= max;
 }
 
-void PutByte(const unsigned char byteHolder, unsigned char& byteGetter, const char position, const char newPosition)
+void CopyByte(const unsigned char byteHolder, unsigned char& byteGetter, const char position, const char newPosition)
 {
 	char mask = 0x1;
 	mask = (mask & (byteHolder >> position)) << newPosition;
@@ -41,7 +41,7 @@ void Encrypt(unsigned char& byte, const unsigned char key)
 	byte = byte ^ key;
 	for (const BytePosition& position : BYTE_POSITION)
 	{
-		PutByte(byte, processedByte, position.left, position.right);
+		CopyByte(byte, processedByte, position.left, position.right);
 	}
 	byte = processedByte;
 }
@@ -51,7 +51,7 @@ void Decrypt(unsigned char& byte, const unsigned char key)
 	unsigned char processedByte = 0;
 	for (const BytePosition& position : BYTE_POSITION)
 	{
-		PutByte(byte, processedByte, position.right, position.left);
+		CopyByte(byte, processedByte, position.right, position.left);
 	}
 	byte = processedByte;
 	byte = byte ^ key;
@@ -74,7 +74,7 @@ CryptFunction CommandToCryptFunction(const string& command)
 	return nullptr;
 }
 
-void Crypt(istream& in, ostream& out, const unsigned char key, CryptFunction const& cryptFunction)
+void Crypt(istream& in, ostream& out, const unsigned char key, const CryptFunction const& cryptFunction)
 {
 	char byte;
 	while (in.get(byte))
@@ -82,14 +82,14 @@ void Crypt(istream& in, ostream& out, const unsigned char key, CryptFunction con
 		uint8_t b = static_cast<uint8_t>(byte);
 		cryptFunction(b, key);
 		out.put(b);
-	} 
-} 
- 
+	}
+}
+
 bool Crypt(
 	const string& inputFileName,
 	const string& outputFileName,
 	const unsigned char key,
-	CryptFunction const& cryptFunction)
+	const CryptFunction const& cryptFunction)
 {
 	ifstream infile(inputFileName, ios_base::in | ios_base::binary);
 	ofstream outile(outputFileName, ios_base::out | ios_base::binary);
@@ -112,7 +112,7 @@ bool IsValidParams(int argc, char* argv[])
 	unsigned char key;
 	try
 	{
-		key = static_cast<char>(stoi(argv[4]));
+		key = static_cast<char>(stoul(argv[4]));
 	}
 	catch (const exception& e)
 	{
