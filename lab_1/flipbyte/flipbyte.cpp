@@ -11,7 +11,7 @@ bool Between(const T item, const T min, const T max)
 	return item >= min && item <= max;
 }
 
-void FlipByte(unsigned char& number)
+void FlipByte(uint8_t& number)
 {
 	unsigned char flippedNumber = 0;
 	for (size_t i = 0; i < NUMBER_SIZE_IN_BITS; ++i)
@@ -23,7 +23,7 @@ void FlipByte(unsigned char& number)
 	number = flippedNumber;
 }
 
-bool ParseCommandLine(int argc, char* argv[], unsigned char &number)
+bool ParseCommandLine(int argc, char* argv[], uint8_t& number)
 {
 	if (argc != ARGS_COUNT)
 	{
@@ -54,14 +54,14 @@ bool ParseCommandLine(int argc, char* argv[], unsigned char &number)
 
 int main(int argc, char* argv[])
 {
-	unsigned char numberToFlipBytes;
-	if (!ParseCommandLine(argc, argv, numberToFlipBytes))
+	uint8_t byteToFlip;
+	if (!ParseCommandLine(argc, argv, byteToFlip))
 	{
-		cout << "Invalid params\n"; 
+		cout << "Invalid params. Correct params: flipbyte.exe <number from 0 to 255> \n"; 
 		return 1;
 	} 
 
-	FlipByte(numberToFlipBytes);
-	cout << static_cast<unsigned int>(numberToFlipBytes) << "\n";
+	FlipByte(byteToFlip);
+	cout << static_cast<unsigned int>(byteToFlip) << "\n";
 	return 0;
 }
