@@ -20,7 +20,7 @@ bool Between(T item, T min, T max)
 	return item >= min && item <= max;
 }
 
-bool SetMap(istream& input, Map& map)
+bool LoadMapFromStream(istream& input, Map& map)
 {
 	string line;
 	while (getline(input, line))
@@ -35,10 +35,10 @@ bool SetMap(istream& input, Map& map)
 	return map.size() != 0;
 }
 
-bool SetMap(const string& inputFileName, Map& map)
+bool LoadMapFromFile(const string& inputFileName, Map& map)
 {
 	ifstream inFile(inputFileName);
-	return inFile.is_open() && SetMap(inFile, map);
+	return inFile.is_open() && LoadMapFromStream(inFile, map);
 }
 
 void PrintMap(const Map& map, ostream& out = cout)
@@ -155,11 +155,12 @@ int main(int argc, char* argv[])
 	string outputFileName;
 	if (!ParseCommandLine(argc, argv, inputFileName, outputFileName))
 	{
+		cout << "Invaliad params. Correct params: life.exe <input_file.txt> [output_file.txt]";
 		return 1;
 	}
 
 	Map map; 
-	if (SetMap(inputFileName, map) && IsValidMap(map))
+	if (LoadMapFromFile(inputFileName, map) && IsValidMap(map))
 	{
 		NextLifeGeneration(map);
 		if (!outputFileName.empty())
