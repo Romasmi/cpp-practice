@@ -1,16 +1,16 @@
 #include "pch.h"
 using namespace std;
-using CryptFunction = function<void(unsigned char& byte, const unsigned char key)>;
+using CryptFunction = function<void(uint8_t& byte, const uint8_t key)>;
 
 struct BytePosition
 {
-	unsigned char left;
-	unsigned char right;
+	uint8_t left;
+	uint8_t right;
 };
 
 const unsigned int ARGS_COUNT = 5;
-const unsigned char MIN_KEY = 0;
-const unsigned char MAX_KEY = 255;
+const uint8_t MIN_KEY = 0;
+const uint8_t MAX_KEY = 255;
 const vector<BytePosition> BYTE_POSITION = {
 	{ 7, 5 },
 	{ 6, 1 },
@@ -28,16 +28,16 @@ bool Between(T item, T min, T max)
 	return item >= min && item <= max;
 }
 
-void CopyByte(const unsigned char byteHolder, unsigned char& byteGetter, const char position, const char newPosition)
+void CopyByte(const uint8_t byteHolder, uint8_t& byteGetter, const uint8_t position, const uint8_t newPosition)
 {
-	char mask = 0x1;
+	uint8_t mask = 0x1;
 	mask = (mask & (byteHolder >> position)) << newPosition;
 	byteGetter = byteGetter | mask;
 }
 
-void Encrypt(unsigned char& byte, const unsigned char key)
+void Encrypt(uint8_t& byte, const uint8_t key)
 {
-	unsigned char processedByte = 0;
+	uint8_t processedByte = 0;
 	byte = byte ^ key;
 	for (const BytePosition& position : BYTE_POSITION)
 	{
@@ -46,9 +46,9 @@ void Encrypt(unsigned char& byte, const unsigned char key)
 	byte = processedByte;
 }
 
-void Decrypt(unsigned char& byte, const unsigned char key)
+void Decrypt(uint8_t& byte, const uint8_t key)
 {
-	unsigned char processedByte = 0;
+	uint8_t processedByte = 0;
 	for (const BytePosition& position : BYTE_POSITION)
 	{
 		CopyByte(byte, processedByte, position.right, position.left);
@@ -74,7 +74,7 @@ CryptFunction CommandToCryptFunction(const string& command)
 	return nullptr;
 }
 
-void Crypt(istream& in, ostream& out, const unsigned char key, const CryptFunction const& cryptFunction)
+void Crypt(istream& in, ostream& out, const uint8_t key, const CryptFunction const& cryptFunction)
 {
 	char byte;
 	while (in.get(byte))
@@ -88,7 +88,7 @@ void Crypt(istream& in, ostream& out, const unsigned char key, const CryptFuncti
 bool Crypt(
 	const string& inputFileName,
 	const string& outputFileName,
-	const unsigned char key,
+	const uint8_t key,
 	const CryptFunction const& cryptFunction)
 {
 	ifstream infile(inputFileName, ios_base::in | ios_base::binary);
@@ -109,10 +109,10 @@ bool IsValidParams(int argc, char* argv[])
 		return false;
 	}
 
-	unsigned char key;
+	uint8_t key;
 	try
 	{
-		key = static_cast<char>(stoul(argv[4]));
+		key = static_cast<uint8_t>(stoul(argv[4]));
 	}
 	catch (const exception& e)
 	{
@@ -120,7 +120,7 @@ bool IsValidParams(int argc, char* argv[])
 		return false;
 	}
 
-	if (!Between<unsigned char>(key, MIN_KEY, MAX_KEY))
+	if (!Between<uint8_t>(key, MIN_KEY, MAX_KEY))
 	{
 		return false;
 	}
@@ -132,14 +132,14 @@ int main(int argc, char* argv[])
 {
 	if (!IsValidParams(argc, argv))
 	{
-		cout << "Invalid params\n";
+		cout << "Invalid params. Correct params: crypt.txt <crypt way: encrypt|decrypt> <input_file> [<output_file>]\n";
 		return 1;
 	}
 
 	const string command = argv[1];
 	const string inputFileName = argv[2];
 	const string outputFileName = argv[3];
-	const unsigned char key = static_cast<unsigned char>(stoul(argv[4]));
+	const uint8_t key = static_cast<uint8_t>(stoul(argv[4]));
 	CryptFunction cryptFunction = CommandToCryptFunction(command);
 
 	return Crypt(inputFileName, outputFileName, key, cryptFunction) ? 0 : 1;
