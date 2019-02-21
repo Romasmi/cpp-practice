@@ -57,9 +57,9 @@ int main(int argc, char* argv[])
 	uint8_t byteToFlip;
 	if (!ParseCommandLine(argc, argv, byteToFlip))
 	{
-		cout << "Invalid params. Correct params: flipbyte.exe <number from 0 to 255> \n"; 
+		cout << "Invalid params. Correct params: flipbyte.exe <number from 0 to 255> \n";
 		return 1;
-	} 
+	}
 
 	FlipByte(byteToFlip);
 	cout << static_cast<unsigned int>(byteToFlip) << "\n";
