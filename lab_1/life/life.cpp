@@ -159,7 +159,7 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	Map map; 
+	Map map;
 	if (LoadMapFromFile(inputFileName, map) && IsValidMap(map))
 	{
 		NextLifeGeneration(map);
@@ -168,7 +168,7 @@ int main(int argc, char* argv[])
 			ofstream out(outputFileName);
 			PrintMap(map, out);
 		}
-		else 
+		else
 		{
 			PrintMap(map, cout);
 		}

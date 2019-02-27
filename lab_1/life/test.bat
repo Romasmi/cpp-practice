@@ -45,10 +45,12 @@ if NOT ERRORLEVEL 1 goto error
 rem Border size
 rem min size life
 %PROGRAM% min_size_life.txt %TEMP%\out.txt
+if ERRORLEVEL 1 goto error
 fc %TEMP%\out.txt min_size_life_out.txt
 if ERRORLEVEL 1 goto error
 rem max size life
 %PROGRAM% max_size_life.txt %TEMP%\out.txt
+if ERRORLEVEL 1 goto error
 fc %TEMP%\out.txt max_size_life_out.txt
 if ERRORLEVEL 1 goto error
 
