@@ -2,6 +2,14 @@
 using namespace std;
 using CryptFunction = function<void(uint8_t& byte, const uint8_t key)>;
 
+struct Params
+{
+	string command;
+	string inputFileName;
+	string outputFileName;
+	uint8_t key;
+};
+
 struct BytePosition
 {
 	uint8_t left;
@@ -28,11 +36,11 @@ bool Between(T item, T min, T max)
 	return item >= min && item <= max;
 }
 
-void CopyByte(const uint8_t byteHolder, uint8_t& byteGetter, const uint8_t position, const uint8_t newPosition)
+void CopyBit(const uint8_t sourceByte, uint8_t& destinationByte, const uint8_t sourcePos, const uint8_t desctinationPos)
 {
 	uint8_t mask = 0x1;
-	mask = (mask & (byteHolder >> position)) << newPosition;
-	byteGetter = byteGetter | mask;
+	mask = (mask & (sourceByte >> sourcePos)) << desctinationPos;
+	destinationByte = destinationByte | mask;
 }
 
 void Encrypt(uint8_t& byte, const uint8_t key)
@@ -41,7 +49,7 @@ void Encrypt(uint8_t& byte, const uint8_t key)
 	byte = byte ^ key;
 	for (const BytePosition& position : BYTE_POSITION)
 	{
-		CopyByte(byte, processedByte, position.left, position.right);
+		CopyBit(byte, processedByte, position.left, position.right);
 	}
 	byte = processedByte;
 }
@@ -51,7 +59,7 @@ void Decrypt(uint8_t& byte, const uint8_t key)
 	uint8_t processedByte = 0;
 	for (const BytePosition& position : BYTE_POSITION)
 	{
-		CopyByte(byte, processedByte, position.right, position.left);
+		CopyBit(byte, processedByte, position.right, position.left);
 	}
 	byte = processedByte;
 	byte = byte ^ key;
@@ -74,7 +82,7 @@ CryptFunction CommandToCryptFunction(const string& command)
 	return nullptr;
 }
 
-void Crypt(istream& in, ostream& out, const uint8_t key, const CryptFunction const& cryptFunction)
+void Crypt(istream& in, ostream& out, const uint8_t key, const CryptFunction& cryptFunction)
 {
 	char byte;
 	while (in.get(byte))
@@ -89,7 +97,7 @@ bool Crypt(
 	const string& inputFileName,
 	const string& outputFileName,
 	const uint8_t key,
-	const CryptFunction const& cryptFunction)
+	const CryptFunction& cryptFunction)
 {
 	ifstream infile(inputFileName, ios_base::in | ios_base::binary);
 	ofstream outile(outputFileName, ios_base::out | ios_base::binary);
@@ -102,22 +110,24 @@ bool Crypt(
 	return true;
 }
 
-bool IsValidParams(int argc, char* argv[])
+bool ParseCommandLine(int argc, char* argv[], Params& params)
 {
 	if (argc != ARGS_COUNT)
 	{
 		return false;
 	}
 
-	if (CommandToCryptFunction(argv[1]) == nullptr)
+	params.command = argv[1];
+	params.inputFileName = argv[2];
+	params.outputFileName = argv[3];
+	if (CommandToCryptFunction(params.command) == nullptr)
 	{
 		return false;
 	}
 
-	uint8_t key;
 	try
 	{
-		key = static_cast<uint8_t>(stoul(argv[4]));
+		params.key = static_cast<uint8_t>(stoul(argv[4]));
 	}
 	catch (const exception& e)
 	{
@@ -125,28 +135,19 @@ bool IsValidParams(int argc, char* argv[])
 		return false;
 	}
 
-	if (!Between<uint8_t>(key, MIN_KEY, MAX_KEY))
-	{
-		return false;
-	}
-
-	return CommandToCryptFunction(argv[1]) != nullptr;
+	return Between<uint8_t>(params.key, MIN_KEY, MAX_KEY);
 }
 
 int main(int argc, char* argv[])
 {
-	if (!IsValidParams(argc, argv))
+	Params params;
+	if (!ParseCommandLine(argc, argv, params))
 	{
 		cout << "Invalid params."
 			 << "Correct params: crypt.txt <crypt way: encrypt|decrypt> <input_file> <output_file> <key from 0 to 255>\n";
 		return 1;
 	}
 
-	const string command = argv[1];
-	const string inputFileName = argv[2];
-	const string outputFileName = argv[3];
-	const uint8_t key = static_cast<uint8_t>(stoul(argv[4]));
-	CryptFunction cryptFunction = CommandToCryptFunction(command);
-
-	return Crypt(inputFileName, outputFileName, key, cryptFunction) ? 0 : 1;
+	CryptFunction cryptFunction = CommandToCryptFunction(params.command);
+	return Crypt(params.inputFileName, params.outputFileName, params.key, cryptFunction) ? 0 : 1;
 }
