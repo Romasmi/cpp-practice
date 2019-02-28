@@ -11,5 +11,6 @@
 #include <numeric>
 #include <functional>
 #include <algorithm>
+#include "process_vector.h"
 
 #endif
