@@ -1,13 +1,18 @@
 #include "pch.h"
+
+#include "process_vector.h"
+
 using namespace std;
 
-int main() {
+int main()
+{
 	vector<double> inputVector;
 	LoadVectorFromStream(inputVector, cin);
-	if (inputVector.size() == 0) {
+	if (inputVector.size() == 0)
+	{
 		cout << "Invalid input.\n"
-			<< "Correct input: <double number> [<double numbers separated by "
-			"space>]";
+			 << "Correct input: <double number> [<double numbers separated by "
+				"space>]";
 		return 1;
 	}
 
