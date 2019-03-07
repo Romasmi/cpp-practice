@@ -1,6 +1,7 @@
 #include "pch.h"
 
 #include "process_vector.h"
+#include "util.h"
 
 using namespace std;
 
@@ -18,6 +19,6 @@ int main()
 
 	ProcessVector(inputVector);
 	sort(inputVector.begin(), inputVector.end());
-	Print(inputVector);
+	cout << inputVector;
 	return 0;
 }

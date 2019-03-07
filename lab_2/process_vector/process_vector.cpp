@@ -1,22 +1,21 @@
 #include "pch.h"
 
 #include "process_vector.h"
+#include "util.h"
 
 const double MULTIPLICATOR = 2;
 
 void LoadVectorFromStream(std::vector<double>& v, std::istream& input)
 {
 	std::string currentLine;
-	double number;
-	while (input >> number)
+	if (getline(input, currentLine))
 	{
-		v.push_back(number);
+		v = LineToVector<double>(currentLine);
 	}
-}
-
-void Print(const std::vector<double> v)
-{
-	copy(v.begin(), v.end(), std::ostream_iterator<double>(std::cout, " "));
+	else
+	{
+		v.clear();
+	}
 }
 
 double GetNonNegativeNumbersSum(const std::vector<double>& v)
