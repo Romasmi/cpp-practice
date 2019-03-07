@@ -1,5 +1,5 @@
-#include "pch.h"
 #include "util.h"
+#include "pch.h"
 
 std::ostream& operator<<(std::ostream& out, std::vector<double> v)
 {

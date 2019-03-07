@@ -3,11 +3,12 @@
 #include "../process_vector/process_vector.h"
 
 using namespace std;
-vector<double> in = {};
-vector<double> out = {};
 
 TEST_CASE("Process vector test")
 {
+	vector<double> in = {};
+	vector<double> out = {};
+
 	/*Empty input*/
 	in = {};
 	out = {};
@@ -37,6 +38,8 @@ TEST_CASE("Process vector test")
 TEST_CASE("Load vector test")
 {
 	istringstream inputStream;
+	vector<double> in = {};
+	vector<double> out = {};
 
 	/*Empty string*/
 	inputStream.str("");
