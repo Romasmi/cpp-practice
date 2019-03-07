@@ -19,11 +19,11 @@ void Print(const std::vector<double> v)
 	copy(v.begin(), v.end(), std::ostream_iterator<double>(std::cout, " "));
 }
 
-double GetNegativeNumbersSum(const std::vector<double>& v)
+double GetNonNegativeNumbersSum(const std::vector<double>& v)
 {
 	return accumulate(v.begin(), v.end(), 0.0,
 		[](const double sum, const double number) {
-			return (number < 0) ? sum + number : sum;
+			return (number >= 0) ? sum + number : sum;
 		});
 }
 
@@ -33,7 +33,7 @@ bool IsEven(size_t number) { return number % 2 == 0; }
  * стоящих на нечетных позициях, вычесть сумму всех неотрицательных элементов*/
 void ProcessVector(std::vector<double>& v)
 {
-	double negativeNumbersSum = GetNegativeNumbersSum(v);
+	double nonNegativeNumbersSum = GetNonNegativeNumbersSum(v);
 	for (size_t i = 0; i < v.size(); ++i)
 	{
 		if (IsEven(i + 1))
@@ -42,7 +42,14 @@ void ProcessVector(std::vector<double>& v)
 		}
 		else
 		{
-			v[i] -= negativeNumbersSum;
+			v[i] -= nonNegativeNumbersSum;
 		}
 	}
+}
+
+std::vector<double> GetProcesedVector(const std::vector<double>& v)
+{
+	std::vector<double> localVector = v;
+	ProcessVector(localVector);
+	return localVector;
 }

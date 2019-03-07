@@ -18,7 +18,7 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="process_vector.h">
+    <ClInclude Include="..\process_vector\process_vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -26,11 +26,17 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="process_vector.cpp">
+    <ClCompile Include="process_vector_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\process_vector\process_vector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>
