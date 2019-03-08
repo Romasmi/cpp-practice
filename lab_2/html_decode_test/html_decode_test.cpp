@@ -1,4 +1,5 @@
 #include "pch.h"
+
 #include "../../catch/catch.hpp"
 #include "../html_decode/html_processor.h"
 using namespace std;
@@ -24,6 +25,10 @@ TEST_CASE("Html decoding test")
 	/*One symbol*/
 	str = "<";
 	REQUIRE(str == HtmlDecode(HtmlEncode(str)));
+
+	/*Decode unknown tag*/
+	str = "&abc;";
+	REQUIRE(str == HtmlDecode(str));
 
 	/*html tags*/
 	str = "<h1>My title</h1><div>Hello world</div>";

@@ -11,20 +11,21 @@ const struct
 	char end = ';';
 } HTML_CODE_DELIMITES;
 
+const char NOT_FOUND_ENTITY = '\0';
 
 using HtmlEntityCode = std::pair<char, std::string>;
 
 const std::vector<HtmlEntityCode> HTML_ENTITIES_CODES = {
-	{ '"', "quot" },
-	{ '\'', "apos" },
-	{ '<', "lt" },
-	{ '>', "gt" },
-	{ '&', "amp" }
+	{ '"', "&quot;" },
+	{ '\'', "&apos;" },
+	{ '<', "&lt;" },
+	{ '>', "&gt;" },
+	{ '&', "&amp;" }
 };
 
 std::string GetEntityCode(const char entity)
 {
-	for (HtmlEntityCode item : HTML_ENTITIES_CODES)
+	for (const HtmlEntityCode& item : HTML_ENTITIES_CODES)
 	{
 		if (entity == item.first)
 		{
@@ -34,9 +35,9 @@ std::string GetEntityCode(const char entity)
 	return "";
 }
 
-char GetEntityByCode(const string &code)
+char GetEntityByCode(const string& code)
 {
-	for (HtmlEntityCode item : HTML_ENTITIES_CODES)
+	for (const HtmlEntityCode& item : HTML_ENTITIES_CODES)
 	{
 		if (code == item.second)
 		{
@@ -46,44 +47,51 @@ char GetEntityByCode(const string &code)
 	return '\0';
 }
 
-std::string HtmlEncode(const std::string str)
+std::string HtmlEncode(const std::string& str)
 {
 	string processedString;
-	for (char ch : str)
+	for (const char ch : str)
 	{
-		std::string code = GetEntityCode(ch);
+		const string code = GetEntityCode(ch);
 		if (!code.empty())
 		{
-			processedString.append(HTML_CODE_DELIMITES.start + code + HTML_CODE_DELIMITES.end);
+			processedString.append(code);
 		}
 		else
 		{
-			processedString.append(string(1, ch));
+			processedString += ch;
 		}
 	}
 	return processedString;
 }
 
-std::string HtmlDecode(const std::string str)
+std::string HtmlDecode(const std::string& str)
 {
 	string processedString;
 	string entityCode;
 	bool inEntity = false;
-	for (char ch : str)
+	for (const char ch : str)
 	{
 		if (ch == HTML_CODE_DELIMITES.start)
 		{
-			entityCode.clear();
+			entityCode = ch;
 			inEntity = true;
-			continue;
 		}
-		if (ch == HTML_CODE_DELIMITES.end)
+		else if (ch == HTML_CODE_DELIMITES.end)
 		{
-			processedString += GetEntityByCode(entityCode);
+			entityCode += ch;
+			const char entity = GetEntityByCode(entityCode);
+			if (entity != NOT_FOUND_ENTITY)
+			{
+				processedString += entity;
+			}
+			else
+			{
+				processedString += entityCode;
+			}
 			inEntity = false;
-			continue;
 		}
-		if (inEntity)
+		else if (inEntity)
 		{
 			entityCode += ch;
 		}
