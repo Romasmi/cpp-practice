@@ -8,24 +8,22 @@
 using namespace std;
 
 Dictionary::Dictionary()
-	: externalDictionaryFileName("")
-{
-}
+{}
 
-Dictionary::Dictionary(const std::string& fileName)
+Dictionary::Dictionary(const std::wstring& fileName)
 	: externalDictionaryFileName(fileName)
 {
-	ifstream input(this->externalDictionaryFileName);
+	wifstream input(this->externalDictionaryFileName);
 	if (input.is_open())
 	{
 		this->Load(input);
 	}
 }
 
-void Dictionary::Load(istream& in)
+void Dictionary::Load(wistream& in)
 {
-	string entry;
-	string str;
+	wstring entry;
+	wstring str;
 	bool isEven = false;
 	while (getline(in, str))
 	{
@@ -42,7 +40,7 @@ void Dictionary::Load(istream& in)
 	}
 }
 
-void Dictionary::UnLoad(ostream& out) const
+void Dictionary::UnLoad(wostream& out) const
 {	
 	for (const auto &it : this->storage)
 	{
@@ -53,13 +51,14 @@ void Dictionary::UnLoad(ostream& out) const
 
 bool Dictionary::Save() const
 {
-	return this->Save("");
+	const wstring empty;
+	return this->Save(empty);
 }
 
-bool Dictionary::Save(const std::string& fileName) const
+bool Dictionary::Save(const std::wstring& fileName) const
 {
-	const std::string outFileName = !this->externalDictionaryFileName.empty() ? this->externalDictionaryFileName : fileName;
-	ofstream out(outFileName);
+	const std::wstring outFileName = !this->externalDictionaryFileName.empty() ? this->externalDictionaryFileName : fileName;
+	wofstream out(outFileName);
 	if (out.is_open())
 	{
 		this->UnLoad(out);
@@ -71,14 +70,15 @@ bool Dictionary::Save(const std::string& fileName) const
 	}
 }
 
-string Dictionary::Translate(const std::string& entry) const
+wstring Dictionary::Translate(const std::wstring& entry) const
 {
-	string translation;
-	//pair<multimap<string, string>::iterator, multimap<string, string>::iterator> values;
+	wstring translation;
+	//pair<multimap<wstring, wstring>::iterator, multimap<wstring, wstring>::iterator> values;
 	const auto values = this->storage.equal_range(this->ToLower(entry));
+	const wstring translationSeparator = L", ";
 	for (auto it = values.first; it != values.second; ++it)
 	{
-		translation += it->second + ", ";
+		translation += it->second + translationSeparator;
 	}
 	if (!translation.empty())
 	{
@@ -87,7 +87,7 @@ string Dictionary::Translate(const std::string& entry) const
 	return translation;
 }
 
-void Dictionary::Add(std::string entry, std::string translation)
+void Dictionary::Add(std::wstring entry, std::wstring translation)
 {
 	entry = ToLower(entry);
 	translation = ToLower(translation);
@@ -98,9 +98,9 @@ void Dictionary::Add(std::string entry, std::string translation)
 	}
 }
 
-std::string Dictionary::ToLower(const std::string& str) const
+std::wstring Dictionary::ToLower(const std::wstring& str) const
 {
-	string strToTransform = str;
+	wstring strToTransform = str;
 	transform(strToTransform.begin(), strToTransform.end(), strToTransform.begin(), ::tolower);
 	return strToTransform;
 }
