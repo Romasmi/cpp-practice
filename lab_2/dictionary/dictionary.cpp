@@ -10,7 +10,7 @@ using namespace std;
 Dictionary::Dictionary()
 {}
 
-Dictionary::Dictionary(const std::wstring& fileName)
+Dictionary::Dictionary(const std::string& fileName)
 	: externalDictionaryFileName(fileName)
 {
 	wifstream input(this->externalDictionaryFileName);
@@ -51,13 +51,12 @@ void Dictionary::UnLoad(wostream& out) const
 
 bool Dictionary::Save() const
 {
-	const wstring empty;
-	return this->Save(empty);
+	return this->Save("");
 }
 
-bool Dictionary::Save(const std::wstring& fileName) const
+bool Dictionary::Save(const std::string& fileName) const
 {
-	const std::wstring outFileName = !this->externalDictionaryFileName.empty() ? this->externalDictionaryFileName : fileName;
+	const std::string outFileName = !this->externalDictionaryFileName.empty() ? this->externalDictionaryFileName : fileName;
 	wofstream out(outFileName);
 	if (out.is_open())
 	{

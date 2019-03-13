@@ -6,10 +6,10 @@ class Dictionary
 {
 public:
 	Dictionary();
-	Dictionary(const std::wstring& fileName);
+	Dictionary(const std::string& fileName);
 	std::wstring Translate(const std::wstring& entry) const;
 	bool Save() const;
-	bool Save(const std::wstring& out) const;
+	bool Save(const std::string& out) const;
 	void Add(std::wstring entry, std::wstring translation);
 
 private:
@@ -18,5 +18,5 @@ private:
 	std::wstring ToLower(const std::wstring& str) const;
 
 	std::multimap<std::wstring, std::wstring> storage;
-	const std::wstring externalDictionaryFileName;
+	const std::string externalDictionaryFileName;
 };

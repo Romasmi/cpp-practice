@@ -4,7 +4,7 @@
 	
 using namespace std;
 
-TEST_CASE("Test dictionary")
+TEST_CASE("Test dictionary without external file")
 {
 	Dictionary dictionary;
 
@@ -25,4 +25,12 @@ TEST_CASE("Test dictionary")
 	/*Add more translation*/
 	dictionary.Add(L"privet mir", L"hi mir");
 	REQUIRE(L"hello world, hi mir" == dictionary.Translate(translation));
+}
+
+TEST_CASE("Test with external file")
+{
+	Dictionary dictionary("dictionary.txt");
+
+	REQUIRE(L"privet" == dictionary.Translate(L"hello"));
+	REQUIRE(L"hello" == dictionary.Translate(L"privet"));
 }
