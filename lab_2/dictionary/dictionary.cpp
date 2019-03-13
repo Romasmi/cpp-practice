@@ -1,14 +1,15 @@
 #include "pch.h"
 
+#include "dictionary.h"
 #include <fstream>
 #include <iterator>
 #include <map>
-#include "dictionary.h"
 
 using namespace std;
 
 Dictionary::Dictionary()
-{}
+{
+}
 
 Dictionary::Dictionary(const std::string& fileName)
 	: externalDictionaryFileName(fileName)
@@ -41,8 +42,8 @@ void Dictionary::Load(wistream& in)
 }
 
 void Dictionary::UnLoad(wostream& out) const
-{	
-	for (const auto &it : this->storage)
+{
+	for (const auto& it : this->storage)
 	{
 		out << it.first;
 		out << it.second;
@@ -83,6 +84,12 @@ wstring Dictionary::Translate(const std::wstring& entry) const
 	{
 		translation.erase(translation.size() - 2, 2);
 	}
+
+	if (!translation.empty())
+	{
+		translation[0] = ::toupper(translation[0]);
+	}
+
 	return translation;
 }
 
@@ -102,4 +109,9 @@ std::wstring Dictionary::ToLower(const std::wstring& str) const
 	wstring strToTransform = str;
 	transform(strToTransform.begin(), strToTransform.end(), strToTransform.begin(), ::tolower);
 	return strToTransform;
+}
+
+bool Dictionary::IsInUpperCase(const wchar_t ch)
+{
+	return ch == ::toupper(ch);
 }

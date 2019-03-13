@@ -15,8 +15,8 @@ TEST_CASE("Test dictionary without external file")
 	REQUIRE(L"" == dictionary.Translate(L"Hello world"));
 
 	/*Add and translate*/
-	wstring entry = L"hello world";
-	wstring translation = L"privet mir";
+	wstring entry = L"Hello world";
+	wstring translation = L"Privet mir";
 
 	dictionary.Add(entry, translation);
 	REQUIRE(translation == dictionary.Translate(entry));
@@ -24,13 +24,13 @@ TEST_CASE("Test dictionary without external file")
 
 	/*Add more translation*/
 	dictionary.Add(L"privet mir", L"hi mir");
-	REQUIRE(L"hello world, hi mir" == dictionary.Translate(translation));
+	REQUIRE(L"Hello world, hi mir" == dictionary.Translate(translation));
 }
 
 TEST_CASE("Test with external file")
 {
 	Dictionary dictionary("dictionary.txt");
 
-	REQUIRE(L"privet" == dictionary.Translate(L"hello"));
-	REQUIRE(L"hello" == dictionary.Translate(L"privet"));
+	REQUIRE(L"Privet" == dictionary.Translate(L"hello"));
+	REQUIRE(L"Hello" == dictionary.Translate(L"privet"));
 }

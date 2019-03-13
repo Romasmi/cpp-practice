@@ -16,6 +16,7 @@ private:
 	void Load(std::wistream &in);
 	void UnLoad(std::wostream& out) const;
 	std::wstring ToLower(const std::wstring& str) const;
+	bool IsInUpperCase(const wchar_t ch);
 
 	std::multimap<std::wstring, std::wstring> storage;
 	const std::string externalDictionaryFileName;
