@@ -1,6 +1,7 @@
 #include "pch.h"
 
 #include "prime.h"
+#include <iostream>
 
 using namespace std;
 
@@ -9,14 +10,11 @@ bool IsEven(const size_t number)
 	return number % 2 == 0;
 }
 
-PrimeSet GeneratePrimeNumbersSet(const int upperBound)
+PrimeSet GeneratePrimeNumbersSet(const unsigned int upperBound)
 {
 	PrimeSet primeSet;
 	vector<bool> primeVector(upperBound + 1);
-	if (upperBound >= 1)
-	{
-		primeSet.insert(1);
-	}
+
 	fill(primeVector.begin(), primeVector.end(), true);
 
 	if (upperBound >= 2)
@@ -31,12 +29,12 @@ PrimeSet GeneratePrimeNumbersSet(const int upperBound)
 			continue;
 		}
 		primeSet.insert(i);
-		for (unsigned int j = i * i; j <= upperBound; i += 2)
+		for (unsigned int j = i * i; j <= upperBound; j += 2)
 		{
 			if (!primeVector[j])
 			{
 				continue;
-			}
+			} 
 
 			if (j % i == 0)
 			{

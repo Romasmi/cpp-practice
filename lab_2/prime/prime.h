@@ -2,4 +2,4 @@
 
 using PrimeSet = std::set<int>;
 
-PrimeSet GeneratePrimeNumbersSet(const int upperBound);
+PrimeSet GeneratePrimeNumbersSet(const unsigned int upperBound);
