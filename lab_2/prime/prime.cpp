@@ -25,7 +25,7 @@ PrimeSet GeneratePrimeNumbersSet(const unsigned int upperBound)
 		if (primeVector[i])
 		{
 			primeSet.insert(i);
-			for (unsigned int j = i * i; j <= upperBound; j += i)
+			for (unsigned int j = i + i; j <= upperBound; j += i)
 			{
 				primeVector[j] = false;
 			}
