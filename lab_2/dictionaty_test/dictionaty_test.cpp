@@ -16,18 +16,15 @@ TEST_CASE("Test dictionary without external file")
 
 	/*Add and translate*/
 	string entry = "Hello world";
-	string translation = "Privet mir";
+	string translation = "Привет мир";
 
 	dictionary.Add(entry, translation);
 	REQUIRE(translation == dictionary.Translate(entry));
 	REQUIRE(entry == dictionary.Translate(translation));
 
 	/*Add more translation*/
-	dictionary.Add("Privet mir", "hi mir");
-	REQUIRE("Hello world, hi mir" == dictionary.Translate(translation));
-
-	dictionary.Add("кошка", "cat");
-	REQUIRE("кошкаа" == dictionary.Translate("cat"));
+	dictionary.Add("Привет мир", "hi world");
+	REQUIRE("Hello world, hi world" == dictionary.Translate(translation));
 }
 
 TEST_CASE("Test with external file")
