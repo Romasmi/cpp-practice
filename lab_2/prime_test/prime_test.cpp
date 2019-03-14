@@ -20,5 +20,5 @@ TEST_CASE("Test primes generation")
 	REQUIRE(testSet == GeneratePrimeNumbersSet(13));
 
 	REQUIRE(500 == GeneratePrimeNumbersSet(3571).size());
-	REQUIRE(5761455 == GeneratePrimeNumbersSet(100000000).size());
+	//REQUIRE(5761455 == GeneratePrimeNumbersSet(100000000).size());
 }
