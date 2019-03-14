@@ -7,17 +7,17 @@ class Dictionary
 public:
 	Dictionary();
 	Dictionary(const std::string& fileName);
-	std::wstring Translate(const std::wstring& entry) const;
+	std::string Translate(const std::string& entry) const;
 	bool Save() const;
 	bool Save(const std::string& out) const;
-	void Add(std::wstring entry, std::wstring translation);
+	void Add(std::string entry, std::string translation);
 
 private:
-	void Load(std::wistream &in);
-	void UnLoad(std::wostream& out) const;
-	std::wstring ToLower(const std::wstring& str) const;
+	void Load(std::istream &in);
+	void UnLoad(std::ostream& out) const;
+	std::string ToLower(const std::string& str) const;
 	bool IsInUpperCase(const wchar_t ch);
 
-	std::multimap<std::wstring, std::wstring> storage;
+	std::multimap<std::string, std::string> storage;
 	const std::string externalDictionaryFileName;
 };

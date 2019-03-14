@@ -7,5 +7,7 @@
 #include <map>
 #include <algorithm>
 #include <iterator>
+#include <cstdlib>;
+#include <windows.h>;
 
 #endif

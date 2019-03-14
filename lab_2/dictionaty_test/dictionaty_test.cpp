@@ -9,28 +9,31 @@ TEST_CASE("Test dictionary without external file")
 	Dictionary dictionary;
 
 	/*translate empty string*/
-	REQUIRE(L"" == dictionary.Translate(L""));
+	REQUIRE("" == dictionary.Translate(""));
 
 	/*translate unknown phrase*/
-	REQUIRE(L"" == dictionary.Translate(L"Hello world"));
+	REQUIRE("" == dictionary.Translate("Hello world"));
 
 	/*Add and translate*/
-	wstring entry = L"Hello world";
-	wstring translation = L"Privet mir";
+	string entry = "Hello world";
+	string translation = "Privet mir";
 
 	dictionary.Add(entry, translation);
 	REQUIRE(translation == dictionary.Translate(entry));
 	REQUIRE(entry == dictionary.Translate(translation));
 
 	/*Add more translation*/
-	dictionary.Add(L"privet mir", L"hi mir");
-	REQUIRE(L"Hello world, hi mir" == dictionary.Translate(translation));
+	dictionary.Add("Privet mir", "hi mir");
+	REQUIRE("Hello world, hi mir" == dictionary.Translate(translation));
+
+	dictionary.Add("кошка", "cat");
+	REQUIRE("кошкаа" == dictionary.Translate("cat"));
 }
 
 TEST_CASE("Test with external file")
 {
 	Dictionary dictionary("dictionary.txt");
 
-	REQUIRE(L"Privet" == dictionary.Translate(L"hello"));
-	REQUIRE(L"Hello" == dictionary.Translate(L"privet"));
+	REQUIRE("Privet" == dictionary.Translate("hello"));
+	REQUIRE("Hello" == dictionary.Translate("privet"));
 }
