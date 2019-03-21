@@ -47,20 +47,18 @@ char GetEntityByCode(const string& code)
 	return '\0';
 }
 
+std::string HtmlEncode(const char ch)
+{
+	const string code = GetEntityCode(ch);
+	return code.empty() ? string(1, ch) : code;
+}
+
 std::string HtmlEncode(const std::string& str)
 {
 	string processedString;
 	for (const char ch : str)
 	{
-		const string code = GetEntityCode(ch);
-		if (!code.empty())
-		{
-			processedString.append(code);
-		}
-		else
-		{
-			processedString += ch;
-		}
+		processedString.append(HtmlEncode(ch));
 	}
 	return processedString;
 }
