@@ -24,6 +24,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "prime", "prime\prime.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "prime_test", "prime_test\prime_test.vcxproj", "{73E29D28-E0DF-43F6-81A6-96BC18EBE238}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "temp", "temp\temp.vcxproj", "{1EB63C0F-0714-45B0-ABD1-9D59ABF006FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -96,6 +98,14 @@ Global
 		{73E29D28-E0DF-43F6-81A6-96BC18EBE238}.Release|x64.Build.0 = Release|x64
 		{73E29D28-E0DF-43F6-81A6-96BC18EBE238}.Release|x86.ActiveCfg = Release|Win32
 		{73E29D28-E0DF-43F6-81A6-96BC18EBE238}.Release|x86.Build.0 = Release|Win32
+		{1EB63C0F-0714-45B0-ABD1-9D59ABF006FB}.Debug|x64.ActiveCfg = Debug|x64
+		{1EB63C0F-0714-45B0-ABD1-9D59ABF006FB}.Debug|x64.Build.0 = Debug|x64
+		{1EB63C0F-0714-45B0-ABD1-9D59ABF006FB}.Debug|x86.ActiveCfg = Debug|Win32
+		{1EB63C0F-0714-45B0-ABD1-9D59ABF006FB}.Debug|x86.Build.0 = Debug|Win32
+		{1EB63C0F-0714-45B0-ABD1-9D59ABF006FB}.Release|x64.ActiveCfg = Release|x64
+		{1EB63C0F-0714-45B0-ABD1-9D59ABF006FB}.Release|x64.Build.0 = Release|x64
+		{1EB63C0F-0714-45B0-ABD1-9D59ABF006FB}.Release|x86.ActiveCfg = Release|Win32
+		{1EB63C0F-0714-45B0-ABD1-9D59ABF006FB}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

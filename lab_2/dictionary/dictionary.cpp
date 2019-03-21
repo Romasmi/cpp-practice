@@ -4,6 +4,9 @@
 #include <fstream>
 #include <iterator>
 #include <map>
+#include <locale>
+#include <functional>
+#include <iostream>
 
 using namespace std;
 
@@ -11,20 +14,23 @@ Dictionary::Dictionary()
 {
 }
 
-Dictionary::Dictionary(const std::string& fileName)
+Dictionary::Dictionary(const std::wstring& fileName)
 	: externalDictionaryFileName(fileName)
 {
-	ifstream input(this->externalDictionaryFileName);
-	if (input.is_open())
+	if (!this->externalDictionaryFileName.empty())
 	{
-		this->Load(input);
+		wifstream input(this->externalDictionaryFileName);
+		if (input.is_open())
+		{
+			this->Load(input);
+		}
 	}
 }
 
-void Dictionary::Load(istream& in)
+void Dictionary::Load(wistream& in)
 {
-	string entry;
-	string str;
+	wstring entry;
+	wstring str;
 	bool isEven = false;
 	while (getline(in, str))
 	{
@@ -41,24 +47,27 @@ void Dictionary::Load(istream& in)
 	}
 }
 
-void Dictionary::UnLoad(ostream& out) const
+void Dictionary::UnLoad(wostream& out) const
 {
 	for (const auto& it : this->storage)
 	{
-		out << it.first;
-		out << it.second;
+		for (auto secondIt : it.second)
+		{
+			out << it.first << '\n';
+			out << secondIt << '\n';
+		}
 	}
 }
 
 bool Dictionary::Save() const
 {
-	return this->Save("");
+	return this->Save(L"");
 }
 
-bool Dictionary::Save(const std::string& fileName) const
+bool Dictionary::Save(const std::wstring& fileName) const
 {
-	const std::string outFileName = !this->externalDictionaryFileName.empty() ? this->externalDictionaryFileName : fileName;
-	ofstream out(outFileName);
+	const std::wstring outFileName = !this->externalDictionaryFileName.empty() ? this->externalDictionaryFileName : fileName;
+	wofstream out(outFileName);
 	if (out.is_open())
 	{
 		this->UnLoad(out);
@@ -70,16 +79,19 @@ bool Dictionary::Save(const std::string& fileName) const
 	}
 }
 
-string Dictionary::Translate(const std::string& entry) const
+wstring Dictionary::Translate(const std::wstring& entry) const
 {
-	string translation;
-	//pair<multimap<string, string>::iterator, multimap<string, string>::iterator> values;
-	const auto values = this->storage.equal_range(this->ToLower(entry));
-	const string translationSeparator = ", ";
-	for (auto it = values.first; it != values.second; ++it)
+	wstring translation;
+	const wstring translationSeparator = L", ";
+	auto search = this->storage.find(this->ToLower(entry));
+	if (search != this->storage.end())
 	{
-		translation += it->second + translationSeparator;
+		for (auto it : search->second)
+		{
+			translation += it + translationSeparator;
+		}
 	}
+
 	if (!translation.empty())
 	{
 		translation.erase(translation.size() - 2, 2);
@@ -87,31 +99,42 @@ string Dictionary::Translate(const std::string& entry) const
 
 	if (!translation.empty())
 	{
-		translation[0] = ::toupper(translation[0]);
+		translation[0] = std::bind2nd(std::ptr_fun(&std::toupper<wchar_t>), std::locale("ru_RU.UTF-8"))(translation[0]);
 	}
 
 	return translation;
 }
 
-void Dictionary::Add(std::string entry, std::string translation)
+void Dictionary::Add(std::wstring entry, std::wstring translation)
 {
 	entry = ToLower(entry);
 	translation = ToLower(translation);
-	this->storage.insert({ entry, translation });
-	if (entry != translation)
+	this->AddTranslation(entry, translation);
+	this->AddTranslation(translation, entry);
+}
+
+void Dictionary::AddTranslation(std::wstring entry, std::wstring translation)
+{
+	auto search = this->storage.find(entry);
+	if (search != this->storage.end())
 	{
-		this->storage.insert({ translation, entry });
+		search->second.insert(translation);
+	}
+	else
+	{
+		Translation translations = { translation };
+		this->storage.insert({ entry, translations });
 	}
 }
 
-std::string Dictionary::ToLower(const std::string& str) const
+std::wstring Dictionary::ToLower(const std::wstring& str) const
 {
-	string strToTransform = str;
-	transform(strToTransform.begin(), strToTransform.end(), strToTransform.begin(), ::tolower);
+	wstring strToTransform = str;
+	transform(strToTransform.begin(), strToTransform.end(), strToTransform.begin(), std::bind2nd(std::ptr_fun(&std::tolower<wchar_t>), std::locale("ru_RU.UTF-8")));
 	return strToTransform;
 }
 
-bool Dictionary::IsInUpperCase(const wchar_t ch)
+bool Dictionary::InputFileIsSet() const
 {
-	return ch == ::toupper(ch);
+	return this->externalDictionaryFileName.empty();
 }

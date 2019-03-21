@@ -1,13 +1,15 @@
 #ifndef PCH_H
 #define PCH_H
 
-#include <iostream>
-#include <string>
-#include <fstream>
-#include <map>
 #include <algorithm>
+#include <cstdlib>
+#include <clocale>
+#include <fstream>
+#include <iostream>
 #include <iterator>
-#include <cstdlib>;
-#include <windows.h>;
+#include <map>
+#include <string>
+#include <cctype>
+#include <Windows.h>
 
 #endif

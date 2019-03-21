@@ -1,23 +1,28 @@
 #include "pch.h"
 
 #include <map>
+#include <set>
+
+using Translation = std::set<std::wstring>;
+using DictionaryStorage = std::multimap<std::wstring, Translation>;
 
 class Dictionary
 {
 public:
 	Dictionary();
-	Dictionary(const std::string& fileName);
-	std::string Translate(const std::string& entry) const;
+	Dictionary(const std::wstring& fileName);
+	std::wstring Translate(const std::wstring& entry) const;
 	bool Save() const;
-	bool Save(const std::string& out) const;
-	void Add(std::string entry, std::string translation);
+	bool Save(const std::wstring& out) const;
+	bool InputFileIsSet() const;
+	void Add(std::wstring entry, std::wstring translation);
 
 private:
-	void Load(std::istream &in);
-	void UnLoad(std::ostream& out) const;
-	std::string ToLower(const std::string& str) const;
-	bool IsInUpperCase(const wchar_t ch);
+	void Load(std::wistream &in);
+	void UnLoad(std::wostream& out) const;
+	std::wstring ToLower(const std::wstring& str) const;
+	void AddTranslation(std::wstring entry, std::wstring translation);
 
-	std::multimap<std::string, std::string> storage;
-	const std::string externalDictionaryFileName;
+	DictionaryStorage storage;
+	const std::wstring externalDictionaryFileName;
 };
