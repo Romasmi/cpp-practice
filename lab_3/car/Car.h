@@ -17,7 +17,6 @@ class Car
 {
 public:
 	Car();
-	~Car();
 	bool TurnOnEngine();
 	bool TurnOffEngine();
 	bool SetGear(int gear);
@@ -28,6 +27,4 @@ private:
 	Direction m_direction;
 	unsigned int m_speed;
 	int m_gear;
-
 };
-

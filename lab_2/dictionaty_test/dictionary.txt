@@ -1,8 +1,2 @@
 hello
 privet
-hi
-privet
-privet
-hello
-privet
-hi

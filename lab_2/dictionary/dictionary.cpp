@@ -4,8 +4,6 @@
 #include <fstream>
 #include <iterator>
 #include <map>
-#include <locale>
-#include <functional>
 #include <iostream>
 
 using namespace std;
@@ -99,7 +97,7 @@ wstring Dictionary::Translate(const std::wstring& entry) const
 
 	if (!translation.empty())
 	{
-		translation[0] = std::bind2nd(std::ptr_fun(&std::toupper<wchar_t>), std::locale("ru_RU.UTF-8"))(translation[0]);
+		translation[0] = ::toupper(translation[0]);
 	}
 
 	return translation;
@@ -130,7 +128,7 @@ void Dictionary::AddTranslation(std::wstring entry, std::wstring translation)
 std::wstring Dictionary::ToLower(const std::wstring& str) const
 {
 	wstring strToTransform = str;
-	transform(strToTransform.begin(), strToTransform.end(), strToTransform.begin(), std::bind2nd(std::ptr_fun(&std::tolower<wchar_t>), std::locale("ru_RU.UTF-8")));
+	transform(strToTransform.begin(), strToTransform.end(), strToTransform.begin(), ::tolower);
 	return strToTransform;
 }
 
