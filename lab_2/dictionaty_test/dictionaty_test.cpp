@@ -38,4 +38,12 @@ TEST_CASE("Test with external file")
 	Dictionary dictionary(L"dictionary.txt");
 	REQUIRE(L"Privet" == dictionary.Translate(L"Hello"));
 	REQUIRE(L"Hello" == dictionary.Translate(L"privet"));
+
+	/*Add and save*/
+	dictionary.Add(L"privet", L"hi");
+	dictionary.Save();
+
+	/*Open saved dictionary*/
+	Dictionary dictoonary2(L"dictionary.txt");
+	REQUIRE(L"Hello, hi" == dictionary.Translate(L"privet"));
 }
