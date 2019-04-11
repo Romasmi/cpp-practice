@@ -2,8 +2,9 @@
 
 #include "Car.h"
 #include "util.h"
-#include <map>
+#include <iostream>
 #include <iterator>
+#include <map>
 
 using namespace std;
 
@@ -23,10 +24,12 @@ const map<int, GearSpeed> transmission = {
 	{ 5, { 50, 150 } }
 };
 
-Car::Car() {
+Car::Car()
+{
 	m_gear = 0;
 	m_speed = 0;
 	m_direction = NONE;
+	m_engineState = OFF;
 }
 
 bool Car::TurnOnEngine()
@@ -102,39 +105,57 @@ bool Car::SetSpeed(const unsigned int speed)
 	return true;
 }
 
-bool Car::GearExist(const int gear)
+bool Car::GearExist(const int gear) const
 {
 	auto it = transmission.find(gear);
 	return it != transmission.end();
 }
 
-bool Car::GearCorrespondsToSpeed(const int gear)
+bool Car::GearCorrespondsToSpeed(const int gear) const
 {
 	GearSpeed speedInterval = transmission.find(gear)->second;
 	return speedInterval.minSpeed == speedInterval.maxSpeed || Between(m_speed, speedInterval.minSpeed, speedInterval.maxSpeed);
 }
 
-bool Car::SpeedCorrespondsToGear(const unsigned int speed)
+bool Car::SpeedCorrespondsToGear(const unsigned int speed) const
 {
 	GearSpeed speedInterval = transmission.find(m_gear)->second;
-	return speedInterval.minSpeed == speedInterval.maxSpeed || Between(m_speed, speedInterval.minSpeed, speedInterval.maxSpeed);
+	return speedInterval.minSpeed == speedInterval.maxSpeed || Between(speed, speedInterval.minSpeed, speedInterval.maxSpeed);
 }
 
 void Car::SetDirection()
 {
 	if (m_speed != 0)
 	{
-		if (m_gear < 0)
+		if (m_gear > 0)
 		{
-			m_direction = BACK;
+			m_direction = FORWARD;
 		}
 		else
 		{
-			m_direction = FORWARD;
+			m_direction = BACK;
 		}
 	}
 	else
 	{
 		m_direction = NONE;
 	}
+}
+
+string Car::GetEngineState() const
+{
+	return m_engineState == ON ? "ON" : "OFF";
+}
+
+string Car::GetDirection() const
+{
+	return (m_direction != NONE) ? ((m_direction == FORWARD) ? "FORWARD" : "BACK") : "NONE";
+}
+
+void Car::PrintState() const
+{
+	cout << "Engine state:" << GetEngineState() << ", ";
+	cout << "Gear:" << m_gear << ", ";
+	cout << "Speed:" << m_speed << ", ";
+	cout << "Direction:" << GetDirection() << "\n";
 }
