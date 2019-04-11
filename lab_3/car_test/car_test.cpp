@@ -35,7 +35,7 @@ TEST_CASE("test speed setting")
 		/*set possible speed just for current gear*/
 		REQUIRE(true == car.SetGear(1));
 		REQUIRE(true == car.SetSpeed(19));
-		REQUIRE(true == car.SetGear(1));
+		REQUIRE(false == car.SetGear(1));
 		REQUIRE(false == car.SetGear(2));
 
 		/*set impossible speed for current gear*/
@@ -58,15 +58,17 @@ TEST_CASE("test speed setting")
 		REQUIRE(false == car.SetSpeed(155));
 
 		/*decrease gear*/
-		REQUIRE(false == car.SetGear(1));
-		REQUIRE(false == car.SetSpeed(19));
-		REQUIRE(true == car.SetSpeed(20));
-		REQUIRE(true == car.SetGear(1));
-
+		REQUIRE(false == car.SetGear(4));
+		REQUIRE(true == car.SetSpeed(90));
+		REQUIRE(true == car.SetGear(4));
 	}
 
 	SECTION("negative gear")
 	{
+		/*set posititve gear*/
+		REQUIRE(true == car.SetGear(1));
+		REQUIRE(true == car.SetSpeed(10));
+
 		/*set with no zero speed*/
 		REQUIRE(false == car.SetGear(-1));
 
@@ -88,9 +90,6 @@ TEST_CASE("test speed setting")
 
 	SECTION("neutral gear")
 	{
-		REQUIRE(true == car.SetGear(0));
-		REQUIRE(true == car.SetSpeed(0));
-
 		/*set speed to N when current speed < N*/
 		REQUIRE(false == car.SetSpeed(2));
 
