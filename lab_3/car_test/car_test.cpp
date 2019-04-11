@@ -6,6 +6,9 @@ TEST_CASE("test engine")
 {
 	Car car;
 	REQUIRE(true == car.TurnOnEngine());
+	
+	/*trun on active engine*/
+	REQUIRE(false == car.TurnOnEngine());
 
 	/*turn engine off with no zero gear*/
 	REQUIRE(true == car.SetGear(1));
@@ -32,6 +35,7 @@ TEST_CASE("test speed setting")
 
 	SECTION("positive gear")
 	{
+
 		/*set possible speed just for current gear*/
 		REQUIRE(true == car.SetGear(1));
 		REQUIRE(true == car.SetSpeed(19));
@@ -61,6 +65,9 @@ TEST_CASE("test speed setting")
 		REQUIRE(false == car.SetGear(4));
 		REQUIRE(true == car.SetSpeed(90));
 		REQUIRE(true == car.SetGear(4));
+
+		/*set negative speed*/
+		REQUIRE(false == car.SetSpeed(-100));
 	}
 
 	SECTION("negative gear")
