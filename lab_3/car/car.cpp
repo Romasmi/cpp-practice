@@ -41,6 +41,7 @@ bool Car::TurnOnEngine()
 		m_direction = NONE;
 		return true;
 	}
+	cout << "Failed to turn on engine. Engine is already active\n";
 	return false;
 }
 
@@ -52,6 +53,7 @@ bool Car::TurnOffEngine()
 		m_direction = NONE;
 		return true;
 	}
+	cout << "Failed to turn off engine. For turning off, engine has to be disactive, speed has to be equil to 0, gear has to be equil to 0\n";
 	return false;
 }
 
@@ -59,26 +61,32 @@ bool Car::SetGear(const int gear)
 {
 	if (m_engineState == OFF)
 	{
+		cout << "Failed to set gear. Engine is disactive\n";
 		return false;
 	}
 	if (!GearExist(gear))
 	{
+		cout << "Failed to set gear. Such gear is not exist\n";
 		return false;
 	}
 	if (gear == m_gear)
 	{
+		cout << "Failed to set gear. Gear is already the same\n";
 		return false;
 	}
 	if (!GearCorrespondsToSpeed(gear))
 	{
+		cout << "Failed to set gear. Gear is not correcponds to current speed\n";
 		return false;
 	}
 	if (gear == -1 && m_speed != 0)
 	{
+		cout << "Failed to set gear. Speed has to be equal to 0\n";
 		return false;
 	}
 	if (m_gear == -1 && m_speed != 0 && gear == 1)
 	{
+		cout << "Failed to set gear. Speed has to be equal to 0\n";
 		return false;
 	}
 	m_gear = gear;
@@ -89,14 +97,17 @@ bool Car::SetSpeed(const unsigned int speed)
 {
 	if (m_engineState == OFF)
 	{
+		cout << "Failed to set speed. Engine is disactive\n";
 		return false;
 	}
 	if (!SpeedCorrespondsToGear(speed))
 	{
+		cout << "Failed to set speed. Speed is not correcponds to current gear\n";
 		return false;
 	}
 	if (m_gear == 0 && m_speed < speed)
 	{
+		cout << "Failed to set speed. On neutral gearal, it's just impossible to descrase speed\n";
 		return false;
 	}
 	m_speed = speed;

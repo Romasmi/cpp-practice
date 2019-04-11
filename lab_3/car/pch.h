@@ -10,5 +10,15 @@
 #define PCH_H
 
 #include <string>
+#include <iostream>
+#include <utility>
+#include <vector>
+#include <sstream>
+#include <iterator>
+#include <algorithm>
+#include <math.h>
+#include <sstream>
+#include <iomanip>
+#include "util.h"
 
 #endif //PCH_H
