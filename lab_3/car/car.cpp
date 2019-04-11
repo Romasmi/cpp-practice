@@ -14,12 +14,12 @@ bool Car::TurnOffEngine()
 	return true;
 }
 
-bool Car::SetGear(int gear)
+bool Car::SetGear(const int gear)
 {
 	return true;
 }
 
-bool Car::SetSpeed(int speed)
+bool Car::SetSpeed(const unsigned int speed)
 {
 	return true;
 }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "pch.h"
+
 enum EngineState
 {
 	ON,
@@ -19,8 +21,8 @@ public:
 	Car();
 	bool TurnOnEngine();
 	bool TurnOffEngine();
-	bool SetGear(int gear);
-	bool SetSpeed(int speed);
+	bool SetGear(const int gear);
+	bool SetSpeed(const unsigned int speed);
 
 private:
 	EngineState m_engineState;
