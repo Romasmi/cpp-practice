@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="Car.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="util.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Car.cpp" />

@@ -29,4 +29,8 @@ private:
 	Direction m_direction;
 	unsigned int m_speed;
 	int m_gear;
+	bool GearExist(int gear);
+	bool GearCorrespondsToSpeed(const int gear);
+	bool SpeedCorrespondsToGear(const unsigned int speed);
+	void SetDirection();
 };

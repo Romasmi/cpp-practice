@@ -2,21 +2,18 @@
 
 #include "../car/Car.h"
 
-TEST_CASE("Action with disactive engine")
+TEST_CASE("test engine")
 {
 	Car car;
+	REQUIRE(true == car.TurnOnEngine());
 
-	/*positive gear with disactive engine*/
+	/*turn engine off with no zero gear*/
 	REQUIRE(true == car.SetGear(1));
-	REQUIRE(false == car.SetSpeed(10));
-	/*try to turn on on posititve gear*/
-	REQUIRE(false == car.TurnOnEngine());
+	REQUIRE(false == car.TurnOffEngine());
 
-	/*positive gear with disactive engine*/
-	REQUIRE(true == car.SetGear(-1));
-	REQUIRE(false == car.SetSpeed(10));
-	/*try to turn on on negative gear*/
-	REQUIRE(false == car.TurnOnEngine());
+	/*turn engine off with zero gear*/
+	REQUIRE(true == car.SetGear(0));
+	REQUIRE(true == car.TurnOffEngine());
 }
 
 TEST_CASE("Not existing gear")
@@ -103,6 +100,4 @@ TEST_CASE("test speed setting")
 		REQUIRE(true == car.SetGear(0));
 		REQUIRE(true == car.SetSpeed(9));
 	}
-
-
 }
