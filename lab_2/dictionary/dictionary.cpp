@@ -2,9 +2,9 @@
 
 #include "dictionary.h"
 #include <fstream>
+#include <iostream>
 #include <iterator>
 #include <map>
-#include <iostream>
 
 using namespace std;
 
@@ -13,11 +13,11 @@ Dictionary::Dictionary()
 }
 
 Dictionary::Dictionary(const std::wstring& fileName)
-	: externalDictionaryFileName(fileName)
+	: m_externalDictionaryFileName(fileName)
 {
-	if (!this->externalDictionaryFileName.empty())
+	if (!m_externalDictionaryFileName.empty())
 	{
-		wifstream input(this->externalDictionaryFileName);
+		wifstream input(m_externalDictionaryFileName);
 		if (input.is_open())
 		{
 			this->Load(input);
@@ -47,7 +47,7 @@ void Dictionary::Load(wistream& in)
 
 void Dictionary::UnLoad(wostream& out) const
 {
-	for (const auto& it : this->storage)
+	for (const auto& it : m_storage)
 	{
 		for (auto secondIt : it.second)
 		{
@@ -64,7 +64,7 @@ bool Dictionary::Save() const
 
 bool Dictionary::Save(const std::wstring& fileName) const
 {
-	const std::wstring outFileName = !this->externalDictionaryFileName.empty() ? this->externalDictionaryFileName : fileName;
+	const std::wstring outFileName = !m_externalDictionaryFileName.empty() ? m_externalDictionaryFileName : fileName;
 	wofstream out(outFileName);
 	if (out.is_open())
 	{
@@ -81,8 +81,8 @@ wstring Dictionary::Translate(const std::wstring& entry) const
 {
 	wstring translation;
 	const wstring translationSeparator = L", ";
-	auto search = this->storage.find(this->ToLower(entry));
-	if (search != this->storage.end())
+	auto search = m_storage.find(this->ToLower(entry));
+	if (search != m_storage.end())
 	{
 		for (auto it : search->second)
 		{
@@ -105,6 +105,11 @@ wstring Dictionary::Translate(const std::wstring& entry) const
 
 void Dictionary::Add(std::wstring entry, std::wstring translation)
 {
+	if (!m_updated)
+	{
+		m_updated = true;
+	}
+
 	entry = ToLower(entry);
 	translation = ToLower(translation);
 	this->AddTranslation(entry, translation);
@@ -113,15 +118,15 @@ void Dictionary::Add(std::wstring entry, std::wstring translation)
 
 void Dictionary::AddTranslation(std::wstring entry, std::wstring translation)
 {
-	auto search = this->storage.find(entry);
-	if (search != this->storage.end())
+	auto search = m_storage.find(entry);
+	if (search != m_storage.end())
 	{
 		search->second.insert(translation);
 	}
 	else
 	{
 		Translation translations = { translation };
-		this->storage.insert({ entry, translations });
+		m_storage.insert({ entry, translations });
 	}
 }
 
@@ -134,5 +139,10 @@ std::wstring Dictionary::ToLower(const std::wstring& str) const
 
 bool Dictionary::InputFileIsSet() const
 {
-	return this->externalDictionaryFileName.empty();
+	return m_externalDictionaryFileName.empty();
+}
+
+bool Dictionary::Updated() const
+{
+	return m_updated;
 }

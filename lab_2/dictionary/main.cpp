@@ -21,7 +21,6 @@ bool ParseCommandLine(int argc, char* argv[], wstring& fileName)
 void Dialod(Dictionary& dictionary)
 {
 	wstring input;
-	bool wordIsAdded = false;
 	while (getline(wcin, input))
 	{
 		Trim(input);
@@ -44,7 +43,6 @@ void Dialod(Dictionary& dictionary)
 			{
 				dictionary.Add(entry, input);
 				wcout << "У" << entry << "Ф сохранено в словаре как У" << input << "Ф\n";
-				wordIsAdded = true;
 			}
 		}
 		else
@@ -53,7 +51,7 @@ void Dialod(Dictionary& dictionary)
 		}
 	}
 
-	if (wordIsAdded)
+	if (dictionary.Updated())
 	{
 		cout << "¬ словарь были внесены изменени€. ¬ведите Y или y дл€ сохранени€ перед выходом.\n";
 		wstring answer;
