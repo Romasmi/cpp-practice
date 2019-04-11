@@ -7,7 +7,7 @@ TEST_CASE("test engine")
 	Car car;
 	REQUIRE(true == car.TurnOnEngine());
 	
-	/*trun on active engine*/
+	/*turn active engine on*/
 	REQUIRE(false == car.TurnOnEngine());
 
 	/*turn engine off with no zero gear*/
@@ -17,6 +17,9 @@ TEST_CASE("test engine")
 	/*turn engine off with zero gear*/
 	REQUIRE(true == car.SetGear(0));
 	REQUIRE(true == car.TurnOffEngine());
+
+	/*turne disactive engine off */
+	REQUIRE(false == car.TurnOffEngine());
 }
 
 TEST_CASE("Not existing gear")
