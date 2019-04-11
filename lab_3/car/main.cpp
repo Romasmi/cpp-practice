@@ -64,7 +64,7 @@ void OnSetSpeed(Car& car, const vector<string>& inputCommand)
 		return;
 	}
 	const unsigned int speed = stoul(inputCommand[1]);
-	car.SetGear(speed);
+	car.SetSpeed(speed);
 }
 
 void Dialog()
@@ -121,7 +121,7 @@ int main()
 	}
 	catch (const exception& e)
 	{
-		cout << e.what() << '\n';		
+		cout << e.what() << '\n';
 		return 1;
 	}
 	return 0;

@@ -107,7 +107,7 @@ bool Car::SetSpeed(const unsigned int speed)
 	}
 	if (m_gear == 0 && m_speed < speed)
 	{
-		cout << "Failed to set speed. On neutral gearal, it's just impossible to descrase speed\n";
+		cout << "Failed to set speed. On neutral gearal, it's just possible to descrase speed\n";
 		return false;
 	}
 	m_speed = speed;
