@@ -67,8 +67,28 @@ void OnSetSpeed(Car& car, const vector<string>& inputCommand)
 	car.SetSpeed(speed);
 }
 
+string EngineToString(const EngineState state)
+{
+	return state == ON ? "ON" : "OFF";
+}
+
+string DirectionToString(const Direction direction)
+{
+	return (direction != Direction::NONE) ? ((direction == Direction::FORWARD) ? "FORWARD" : "BACK") : "NONE";
+}
+
+void PrintState(const Car& car)
+{
+	cout << "Engine state:" << EngineToString(car.GetEngineState()) << ", ";
+	cout << "Gear:" << car.GetGear() << ", ";
+	cout << "Speed:" << car.GetSpeed() << ", ";
+	cout << "Direction:" << DirectionToString(car.GetDirection()) << "\n";
+}
+
 void Dialog()
 {
+
+
 	Car car;
 
 	string str;
@@ -86,7 +106,7 @@ void Dialog()
 			switch (command)
 			{
 			case Command::INFO:
-				car.PrintState();
+				PrintState(car);
 				break;
 			case Command::ENGINE_ON:
 				car.TurnOnEngine();

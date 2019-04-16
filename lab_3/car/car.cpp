@@ -5,6 +5,8 @@
 #include <iostream>
 #include <iterator>
 #include <map>
+#include <stdlib.h>
+#include <math.h>
 
 using namespace std;
 
@@ -41,7 +43,7 @@ bool Car::TurnOnEngine()
 		m_direction = NONE;
 		return true;
 	}
-	cout << "Failed to turn on engine. Engine is already active\n";
+	m_error = "Failed to turn on engine. Engine is already active\n";
 	return false;
 }
 
@@ -53,7 +55,7 @@ bool Car::TurnOffEngine()
 		m_direction = NONE;
 		return true;
 	}
-	cout << "Failed to turn off engine. For turning off, engine has to be disactive, speed has to be equil to 0, gear has to be equil to 0\n";
+	m_error = "Failed to turn off engine. For turning off, engine has to be disactive, speed has to be equil to 0, gear has to be equil to 0\n";
 	return false;
 }
 
@@ -61,32 +63,37 @@ bool Car::SetGear(const int gear)
 {
 	if (m_engineState == OFF)
 	{
-		cout << "Failed to set gear. Engine is disactive\n";
+		m_error = "Failed to set gear. Engine is disactive\n";
 		return false;
 	}
 	if (!GearExist(gear))
 	{
-		cout << "Failed to set gear. Such gear is not exist\n";
+		m_error = "Failed to set gear. Such gear is not exist\n";
 		return false;
 	}
 	if (gear == m_gear)
 	{
-		cout << "Failed to set gear. Gear is already the same\n";
+		m_error = "Failed to set gear. Gear is already the same\n";
 		return false;
 	}
 	if (!GearCorrespondsToSpeed(gear))
 	{
-		cout << "Failed to set gear. Gear is not correcponds to current speed\n";
+		m_error = "Failed to set gear. Gear is not correcponds to current speed\n";
 		return false;
 	}
 	if (gear == -1 && m_speed != 0)
 	{
-		cout << "Failed to set gear. Speed has to be equal to 0\n";
+		m_error = "Failed to set gear. Speed has to be equal to 0\n";
 		return false;
 	}
 	if (m_gear == -1 && m_speed != 0 && gear == 1)
 	{
-		cout << "Failed to set gear. Speed has to be equal to 0\n";
+		m_error = "Failed to set gear. Speed has to be equal to 0\n";
+		return false;
+	}
+	if (m_gear == -1 && gear > 1)
+	{
+		m_error = "Failed to set gear. It's just possible to set 1th gear if it's -1th gear\n";
 		return false;
 	}
 	m_gear = gear;
@@ -95,24 +102,24 @@ bool Car::SetGear(const int gear)
 
 bool Car::SetSpeed(const unsigned int speed)
 {
+	m_error.clear();
 	if (m_engineState == OFF)
 	{
-		cout << "Failed to set speed. Engine is disactive\n";
+		m_error = "Failed to set speed. Engine is disactive\n";
 		return false;
 	}
+
 	if (!SpeedCorrespondsToGear(speed))
 	{
-		cout << "Failed to set speed. Speed is not correcponds to current gear\n";
+		m_error = "Failed to set speed. Speed is not correcponds to current gear\n";
 		return false;
 	}
-	if (m_gear == 0 && m_speed < speed)
+	if (m_gear == 0 && abs(m_speed) < speed)
 	{
-		cout << "Failed to set speed. On neutral gearal, it's just possible to descrase speed\n";
+		m_error = "Failed to set speed. On neutral gearal, it's just possible to descrase speed\n";
 		return false;
 	}
-	m_speed = speed;
-	SetDirection();
-
+	m_speed = m_speed < 0 || m_gear < 0 ? -1 * speed : speed;
 	return true;
 }
 
@@ -125,7 +132,7 @@ bool Car::GearExist(const int gear) const
 bool Car::GearCorrespondsToSpeed(const int gear) const
 {
 	GearSpeed speedInterval = transmission.find(gear)->second;
-	return speedInterval.minSpeed == speedInterval.maxSpeed || Between(m_speed, speedInterval.minSpeed, speedInterval.maxSpeed);
+	return speedInterval.minSpeed == speedInterval.maxSpeed || Between<unsigned int>(abs(m_speed), speedInterval.minSpeed, speedInterval.maxSpeed);
 }
 
 bool Car::SpeedCorrespondsToGear(const unsigned int speed) const
@@ -134,39 +141,22 @@ bool Car::SpeedCorrespondsToGear(const unsigned int speed) const
 	return speedInterval.minSpeed == speedInterval.maxSpeed || Between(speed, speedInterval.minSpeed, speedInterval.maxSpeed);
 }
 
-void Car::SetDirection()
+EngineState Car::GetEngineState() const
 {
-	if (m_speed != 0)
-	{
-		if (m_gear > 0)
-		{
-			m_direction = FORWARD;
-		}
-		else
-		{
-			m_direction = BACK;
-		}
-	}
-	else
-	{
-		m_direction = NONE;
-	}
+	return m_engineState;
 }
 
-string Car::GetEngineState() const
+Direction Car::GetDirection() const
 {
-	return m_engineState == ON ? "ON" : "OFF";
+	return (m_speed != 0) ? ((m_speed > 0) ? Direction::FORWARD : Direction::BACK) : Direction::NONE;
 }
 
-string Car::GetDirection() const
+int Car::GetSpeed() const
 {
-	return (m_direction != NONE) ? ((m_direction == FORWARD) ? "FORWARD" : "BACK") : "NONE";
+	return abs(m_speed);
 }
 
-void Car::PrintState() const
+int Car::GetGear() const
 {
-	cout << "Engine state:" << GetEngineState() << ", ";
-	cout << "Gear:" << m_gear << ", ";
-	cout << "Speed:" << m_speed << ", ";
-	cout << "Direction:" << GetDirection() << "\n";
+	return m_gear;
 }
