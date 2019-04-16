@@ -18,6 +18,13 @@ void ExpectCorrectState(const CarState& expectState, const Car& car)
 	REQUIRE(expectState.direction == car.GetDirection());
 }
 
+TEST_CASE("don't expect error on init class")
+{
+	Car car;
+	REQUIRE("" == car.GetLastError());
+}
+
+
 TEST_CASE("test engine")
 {
 	Car car;
@@ -61,6 +68,19 @@ TEST_CASE("Not existing gear")
 TEST_CASE("test speed setting")
 {
 	Car car;
+
+	SECTION("set gear with disactive engine")
+	{
+		REQUIRE_FALSE(car.SetGear(1));
+		ExpectCorrectState(CarState({ EngineState::OFF, 0, 0, Direction::NONE }), car);
+	}
+
+	SECTION("set speed with disactive engine")
+	{
+		REQUIRE_FALSE(car.SetSpeed(10));
+		ExpectCorrectState(CarState({ EngineState::OFF, 0, 0, Direction::NONE }), car);
+	}
+
 	REQUIRE(true == car.TurnOnEngine());
 	ExpectCorrectState(CarState({ EngineState::ON, 0, 0, Direction::NONE }), car);
 
