@@ -33,4 +33,6 @@ private:
 	bool SetGear(std::istream& args);
 	bool Info(std::istream& args);
 	ParamsVector StreamLineToVector(std::istream& args);
+	std::string EngineStateToString(const EngineState state) const;
+	std::string DirectionToString(const Direction direction) const;
 };

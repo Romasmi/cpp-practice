@@ -4,13 +4,13 @@
 #include <map>
 #include <string>
 
-enum EngineState
+enum class EngineState
 {
 	ON,
 	OFF
 };
 
-enum Direction
+enum class Direction
 {
 	FORWARD,
 	BACK,
@@ -31,9 +31,6 @@ public:
 	Direction GetDirection() const;
 	std::string GetLastError() const;
 
-	static std::string EngineStateToString(const EngineState state);
-	static std::string DirectionToString(const Direction direction);
-
 private:
 	bool GearExist(int gear) const;
 	bool GearCorrespondsToSpeed(const int gear) const;
@@ -46,7 +43,7 @@ private:
 		unsigned int maxSpeed;
 	};
 
-	const std::map<int, GearSpeed> m_transmission;
+	static std::map<int, GearSpeed> m_transmission;
 	EngineState m_engineState;
 	Direction m_direction;
 	int m_speed;

@@ -47,7 +47,7 @@ bool CarControl::EngineOn(std::istream& args)
 
 bool CarControl::EngineOff(std::istream& args)
 {
-	return m_car.TurnOnEngine();
+	return m_car.TurnOffEngine();
 }
 
 bool CarControl::SetSpeed(std::istream& args)
@@ -76,10 +76,10 @@ bool CarControl::SetGear(std::istream& args)
 
 bool CarControl::Info(std::istream& args)
 {
-	m_output << "Engine state:" << Car::EngineStateToString(m_car.GetEngineState()) << ", ";
+	m_output << "Engine state:" << EngineStateToString(m_car.GetEngineState()) << ", ";
 	m_output << "Gear:" << m_car.GetGear() << ", ";
 	m_output << "Speed:" << m_car.GetSpeed() << ", ";
-	m_output << "Direction:" << Car::DirectionToString(m_car.GetDirection()) << "\n";
+	m_output << "Direction:" << DirectionToString(m_car.GetDirection()) << "\n";
 	return true;
 }
 
@@ -94,4 +94,14 @@ CarControl::ParamsVector CarControl::StreamLineToVector(std::istream& args)
 	getline(args, str);
 	const ParamsVector v = Split(str);
 	return v;
+}
+
+string CarControl::EngineStateToString(const EngineState state) const 
+{
+	return state == EngineState::ON ? "ON" : "OFF";
+}
+
+string CarControl::DirectionToString(const Direction direction) const
+{
+	return (direction != Direction::NONE) ? ((direction == Direction::FORWARD) ? "FORWARD" : "BACK") : "NONE";
 }

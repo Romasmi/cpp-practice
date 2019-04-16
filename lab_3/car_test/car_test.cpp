@@ -64,6 +64,12 @@ TEST_CASE("test speed setting")
 	REQUIRE(true == car.TurnOnEngine());
 	ExpectCorrectState(CarState({ EngineState::ON, 0, 0, Direction::NONE }), car);
 
+	SECTION("not existing gear")
+	{
+		REQUIRE_FALSE(car.SetGear(6));
+		ExpectCorrectState(CarState({ EngineState::ON, 0, 0, Direction::NONE }), car);
+	}
+
 	SECTION("positive gear")
 	{
 

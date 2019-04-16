@@ -4,32 +4,34 @@
 #include "util.h"
 #include <map>
 #include <string>
+#include <iostream>
 
 using namespace std;
 
+std::map<int, Car::GearSpeed> Car::m_transmission = { { -1, { 0, 20 } },
+	{ 0, { 0, 0 } },
+	{ 1, { 0, 30 } },
+	{ 2, { 20, 50 } },
+	{ 3, { 30, 60 } },
+	{ 4, { 40, 90 } },
+	{ 5, { 50, 150 } } };
+
 Car::Car()
-	: m_transmission({ { -1, { 0, 20 } },
-		  { 0, { 0, 0 } },
-		  { 1, { 0, 30 } },
-		  { 2, { 20, 50 } },
-		  { 3, { 30, 60 } },
-		  { 4, { 40, 90 } },
-		  { 5, { 50, 150 } } })
 {
 	m_gear = 0;
 	m_speed = 0;
-	m_direction = NONE;
-	m_engineState = OFF;
+	m_direction = Direction::NONE;
+	m_engineState = EngineState::OFF;
 }
 
 bool Car::TurnOnEngine()
 {
 	m_error.clear();
-	if (m_engineState == OFF)
+	if (m_engineState == EngineState::OFF)
 	{
-		m_engineState = ON;
+		m_engineState = EngineState::ON;
 		m_gear = 0;
-		m_direction = NONE;
+		m_direction = Direction::NONE;
 		return true;
 	}
 	m_error = "Failed to turn on engine. Engine is already active\n";
@@ -39,10 +41,10 @@ bool Car::TurnOnEngine()
 bool Car::TurnOffEngine()
 {
 	m_error.clear();
-	if (m_engineState == ON && m_gear == 0 && m_speed == 0)
+	if (m_engineState == EngineState::ON && m_gear == 0 && m_speed == 0)
 	{
-		m_engineState = OFF;
-		m_direction = NONE;
+		m_engineState = EngineState::OFF;
+		m_direction = Direction::NONE;
 		return true;
 	}
 	m_error = "Failed to turn off engine. For turning off, engine has to be disactive, speed has to be equil to 0, gear has to be equil to 0\n";
@@ -52,7 +54,7 @@ bool Car::TurnOffEngine()
 bool Car::SetGear(const int gear)
 {
 	m_error.clear();
-	if (m_engineState == OFF)
+	if (m_engineState == EngineState::OFF)
 	{
 		m_error = "Failed to set gear. Engine is disactive\n";
 		return false;
@@ -85,7 +87,7 @@ bool Car::SetGear(const int gear)
 bool Car::SetSpeed(const int speed)
 {
 	m_error.clear();
-	if (m_engineState == OFF)
+	if (m_engineState == EngineState::OFF)
 	{
 		m_error = "Failed to set speed. Engine is disactive\n";
 		return false;
@@ -113,23 +115,13 @@ bool Car::GearExist(const int gear) const
 
 bool Car::GearCorrespondsToSpeed(const int gear) const
 {
-	auto it = m_transmission.find(gear);
-	if (it == m_transmission.end())
-	{
-		return false;
-	}
-	GearSpeed speedInterval = m_transmission.find(gear)->second;
+	GearSpeed speedInterval = m_transmission[gear];
 	return speedInterval.minSpeed == speedInterval.maxSpeed || Between<unsigned int>(abs(m_speed), speedInterval.minSpeed, speedInterval.maxSpeed);
 }
 
 bool Car::SpeedCorrespondsToGear(const unsigned int speed) const
 {
-	auto it = m_transmission.find(m_gear);
-	if (it == m_transmission.end())
-	{
-		return false;
-	}
-	GearSpeed speedInterval = it->second;
+	GearSpeed speedInterval = m_transmission[m_gear];
 	return speedInterval.minSpeed == speedInterval.maxSpeed || Between(speed, speedInterval.minSpeed, speedInterval.maxSpeed);
 }
 
@@ -151,16 +143,6 @@ int Car::GetSpeed() const
 int Car::GetGear() const
 {
 	return m_gear;
-}
-
-string Car::EngineStateToString(const EngineState state)
-{
-	return state == ON ? "ON" : "OFF";
-}
-
-string Car::DirectionToString(const Direction direction)
-{
-	return (direction != Direction::NONE) ? ((direction == Direction::FORWARD) ? "FORWARD" : "BACK") : "NONE";
 }
 
 string Car::GetLastError() const
