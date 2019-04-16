@@ -2,31 +2,19 @@
 
 #include "Car.h"
 #include "util.h"
-#include <iostream>
-#include <iterator>
 #include <map>
-#include <stdlib.h>
-#include <math.h>
+#include <string>
 
 using namespace std;
 
-struct GearSpeed
-{
-	unsigned int minSpeed;
-	unsigned int maxSpeed;
-};
-
-const map<int, GearSpeed> transmission = {
-	{ -1, { 0, 20 } },
-	{ 0, { 0, 0 } },
-	{ 1, { 0, 30 } },
-	{ 2, { 20, 50 } },
-	{ 3, { 30, 60 } },
-	{ 4, { 40, 90 } },
-	{ 5, { 50, 150 } }
-};
-
 Car::Car()
+	: m_transmission({ { -1, { 0, 20 } },
+		  { 0, { 0, 0 } },
+		  { 1, { 0, 30 } },
+		  { 2, { 20, 50 } },
+		  { 3, { 30, 60 } },
+		  { 4, { 40, 90 } },
+		  { 5, { 50, 150 } } })
 {
 	m_gear = 0;
 	m_speed = 0;
@@ -36,6 +24,7 @@ Car::Car()
 
 bool Car::TurnOnEngine()
 {
+	m_error.clear();
 	if (m_engineState == OFF)
 	{
 		m_engineState = ON;
@@ -49,6 +38,7 @@ bool Car::TurnOnEngine()
 
 bool Car::TurnOffEngine()
 {
+	m_error.clear();
 	if (m_engineState == ON && m_gear == 0 && m_speed == 0)
 	{
 		m_engineState = OFF;
@@ -61,6 +51,7 @@ bool Car::TurnOffEngine()
 
 bool Car::SetGear(const int gear)
 {
+	m_error.clear();
 	if (m_engineState == OFF)
 	{
 		m_error = "Failed to set gear. Engine is disactive\n";
@@ -91,7 +82,7 @@ bool Car::SetGear(const int gear)
 	return true;
 }
 
-bool Car::SetSpeed(const unsigned int speed)
+bool Car::SetSpeed(const int speed)
 {
 	m_error.clear();
 	if (m_engineState == OFF)
@@ -116,25 +107,25 @@ bool Car::SetSpeed(const unsigned int speed)
 
 bool Car::GearExist(const int gear) const
 {
-	auto it = transmission.find(gear);
-	return it != transmission.end();
+	auto it = m_transmission.find(gear);
+	return it != m_transmission.end();
 }
 
 bool Car::GearCorrespondsToSpeed(const int gear) const
 {
-	auto it = transmission.find(gear);
-	if (it == transmission.end())
+	auto it = m_transmission.find(gear);
+	if (it == m_transmission.end())
 	{
 		return false;
 	}
-	GearSpeed speedInterval = transmission.find(gear)->second;
+	GearSpeed speedInterval = m_transmission.find(gear)->second;
 	return speedInterval.minSpeed == speedInterval.maxSpeed || Between<unsigned int>(abs(m_speed), speedInterval.minSpeed, speedInterval.maxSpeed);
 }
 
 bool Car::SpeedCorrespondsToGear(const unsigned int speed) const
 {
-	auto it = transmission.find(m_gear);
-	if (it == transmission.end())
+	auto it = m_transmission.find(m_gear);
+	if (it == m_transmission.end())
 	{
 		return false;
 	}
@@ -160,4 +151,19 @@ int Car::GetSpeed() const
 int Car::GetGear() const
 {
 	return m_gear;
+}
+
+string Car::EngineStateToString(const EngineState state)
+{
+	return state == ON ? "ON" : "OFF";
+}
+
+string Car::DirectionToString(const Direction direction)
+{
+	return (direction != Direction::NONE) ? ((direction == Direction::FORWARD) ? "FORWARD" : "BACK") : "NONE";
+}
+
+string Car::GetLastError() const
+{
+	return m_error;
 }
