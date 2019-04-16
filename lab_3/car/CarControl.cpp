@@ -33,7 +33,7 @@ bool CarControl::HandleCommand()
 	if (it != m_actionMap.end())
 	{
 		bool result = it->second(strm);
-		m_error = m_car.GetLastError();
+		m_error = m_error.empty() ? m_car.GetLastError() : m_error;
 		return result;
 	}
 	m_error = "Unknown command\n";
@@ -53,22 +53,24 @@ bool CarControl::EngineOff(std::istream& args)
 bool CarControl::SetSpeed(std::istream& args)
 {
 	ParamsVector params = StreamLineToVector(args);
-	if (params.size() != 2)
+	if (params.size() != 1)
 	{
+		m_error = "Speed  is not set";
 		return false;
 	}
-	const unsigned int speed = stoul(params[1]);
+	const unsigned int speed = stoul(params[0]);
 	return m_car.SetSpeed(speed);
 }
 
 bool CarControl::SetGear(std::istream& args)
 {
 	ParamsVector params = StreamLineToVector(args);
-	if (params.size() != 2)
+	if (params.size() != 1)
 	{
+		m_error = "Gear is not set";
 		return false;
 	}
-	const int gear = stoi(params[1]);
+	const int gear = stoi(params[0]);
 	return m_car.SetGear(gear);
 }
 
