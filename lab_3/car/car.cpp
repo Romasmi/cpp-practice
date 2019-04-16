@@ -81,21 +81,12 @@ bool Car::SetGear(const int gear)
 		m_error = "Failed to set gear. Gear is not correcponds to current speed\n";
 		return false;
 	}
-	if (gear == -1 && m_speed != 0)
+	if (m_gear <= 0 && m_speed != 0 && gear > 0 || m_gear >= 0 && gear < 0 && m_speed != 0)
 	{
 		m_error = "Failed to set gear. Speed has to be equal to 0\n";
 		return false;
 	}
-	if (m_gear == -1 && m_speed != 0 && gear == 1)
-	{
-		m_error = "Failed to set gear. Speed has to be equal to 0\n";
-		return false;
-	}
-	if (m_gear == -1 && gear > 1)
-	{
-		m_error = "Failed to set gear. It's just possible to set 1th gear if it's -1th gear\n";
-		return false;
-	}
+
 	m_gear = gear;
 	return true;
 }
@@ -131,13 +122,23 @@ bool Car::GearExist(const int gear) const
 
 bool Car::GearCorrespondsToSpeed(const int gear) const
 {
+	auto it = transmission.find(gear);
+	if (it == transmission.end())
+	{
+		return false;
+	}
 	GearSpeed speedInterval = transmission.find(gear)->second;
 	return speedInterval.minSpeed == speedInterval.maxSpeed || Between<unsigned int>(abs(m_speed), speedInterval.minSpeed, speedInterval.maxSpeed);
 }
 
 bool Car::SpeedCorrespondsToGear(const unsigned int speed) const
 {
-	GearSpeed speedInterval = transmission.find(m_gear)->second;
+	auto it = transmission.find(m_gear);
+	if (it == transmission.end())
+	{
+		return false;
+	}
+	GearSpeed speedInterval = it->second;
 	return speedInterval.minSpeed == speedInterval.maxSpeed || Between(speed, speedInterval.minSpeed, speedInterval.maxSpeed);
 }
 

@@ -49,7 +49,7 @@ TEST_CASE("test engine")
 TEST_CASE("Not existing gear")
 {
 	Car car;
-	car.TurnOnEngine();
+	REQUIRE(true == car.TurnOnEngine());
 	ExpectCorrectState(CarState({ EngineState::ON, 0, 0, Direction::NONE }), car);
 
 	REQUIRE(false == car.SetGear(10));
@@ -61,7 +61,7 @@ TEST_CASE("Not existing gear")
 TEST_CASE("test speed setting")
 {
 	Car car;
-	car.TurnOnEngine();
+	REQUIRE(true == car.TurnOnEngine());
 	ExpectCorrectState(CarState({ EngineState::ON, 0, 0, Direction::NONE }), car);
 
 	SECTION("positive gear")
@@ -165,7 +165,7 @@ TEST_CASE("test speed setting")
 		ExpectCorrectState(CarState({ EngineState::ON, 0, 0, Direction::NONE }), car);
 
 		/*set speed to N when current speed > N*/
-		/*with position gear*/
+		  /*with position gear*/
 		REQUIRE(true == car.SetGear(1));
 		ExpectCorrectState(CarState({ EngineState::ON, 0, 1, Direction::NONE }), car);
 		REQUIRE(true == car.SetSpeed(10));
@@ -178,7 +178,7 @@ TEST_CASE("test speed setting")
 		ExpectCorrectState(CarState({ EngineState::ON, 9, 0, Direction::FORWARD }), car);
 		REQUIRE(true == car.SetSpeed(0));
 		ExpectCorrectState(CarState({ EngineState::ON, 0, 0, Direction::NONE }), car);
-		/*with negative gear*/
+		  /*with negative gear*/
 		REQUIRE(true == car.SetGear(-1));
 		ExpectCorrectState(CarState({ EngineState::ON, 0, -1, Direction::NONE }), car);
 		REQUIRE(true == car.SetSpeed(10));
@@ -189,5 +189,55 @@ TEST_CASE("test speed setting")
 		ExpectCorrectState(CarState({ EngineState::ON, 10, 0, Direction::BACK }), car);
 		REQUIRE(true == car.SetSpeed(9));
 		ExpectCorrectState(CarState({ EngineState::ON, 9, 0, Direction::BACK }), car);
+	}
+}
+
+TEST_CASE("test gear with direction")
+{
+	Car car;
+	REQUIRE(true == car.TurnOnEngine());
+
+	SECTION("set positive gear moving back")
+	{
+		REQUIRE(true == car.SetGear(-1));
+		ExpectCorrectState(CarState({ EngineState::ON, 0, -1, Direction::NONE }), car);
+		REQUIRE(true == car.SetSpeed(10));
+		ExpectCorrectState(CarState({ EngineState::ON, 10, -1, Direction::BACK }), car);
+
+		/*from gear -1*/
+		REQUIRE(false == car.SetGear(1));
+		ExpectCorrectState(CarState({ EngineState::ON, 10, -1, Direction::BACK }), car);
+
+		/*from gear 0*/
+		REQUIRE(true == car.SetGear(0));
+		ExpectCorrectState(CarState({ EngineState::ON, 10, 0, Direction::BACK }), car);
+		REQUIRE(false == car.SetGear(1));
+		ExpectCorrectState(CarState({ EngineState::ON, 10, 0, Direction::BACK }), car);
+	}
+
+	SECTION("set negative gear moving forward")
+	{
+		REQUIRE(true == car.SetSpeed(0));
+		ExpectCorrectState(CarState({ EngineState::ON, 0, 0, Direction::NONE }), car);
+		REQUIRE(true == car.SetGear(1));
+		ExpectCorrectState(CarState({ EngineState::ON, 0, 1, Direction::NONE }), car);
+		REQUIRE(true == car.SetSpeed(10));
+		ExpectCorrectState(CarState({ EngineState::ON, 10, 1, Direction::FORWARD }), car);
+
+		/*from gear 1*/
+		REQUIRE(false == car.SetGear(-1));
+		ExpectCorrectState(CarState({ EngineState::ON, 10, 1, Direction::FORWARD }), car);
+
+		/*from gear 0*/
+		REQUIRE(true == car.SetGear(0));
+		ExpectCorrectState(CarState({ EngineState::ON, 10, 0, Direction::FORWARD }), car);
+		REQUIRE(false == car.SetGear(-1));
+		ExpectCorrectState(CarState({ EngineState::ON, 10, 0, Direction::FORWARD }), car);
+
+		/*with zero speed*/
+		REQUIRE(true == car.SetSpeed(0));
+		ExpectCorrectState(CarState({ EngineState::ON, 0, 0, Direction::NONE }), car);
+		REQUIRE(true == car.SetGear(-1));
+		ExpectCorrectState(CarState({ EngineState::ON, 0, -1, Direction::NONE }), car);
 	}
 }
