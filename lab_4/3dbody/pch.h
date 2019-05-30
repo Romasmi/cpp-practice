@@ -14,5 +14,6 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <iterator>
+#include <limits>
 
 #endif

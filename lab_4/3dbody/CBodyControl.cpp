@@ -163,13 +163,14 @@ bool CBodyControl::ShowLight(std::istream& args)
 		return false;
 	}
 
-	double minWeight = GetWeightInWater(m_bodies.front()->GetDensity(), m_bodies.front()->GetVolume());
+	double minWeight = DBL_MAX;
 	shared_ptr<CBody> minWeightBody = nullptr;
 	for (shared_ptr<CBody> body : m_bodies)
 	{
-		if (body->GetMass() < minWeight)
+		double weight = GetWeightInWater(body->GetDensity(), body->GetVolume());
+		if (weight < minWeight)
 		{
-			minWeight = body->GetMass();
+			minWeight = weight;
 			minWeightBody = body;
 		}
 	}
