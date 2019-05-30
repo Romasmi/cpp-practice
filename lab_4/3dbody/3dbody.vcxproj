@@ -72,15 +72,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\sdk\boost_1_66_0;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\sdk\boost_1_66_0\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\sdk\boost_1_66_0;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\sdk\boost_1_66_0\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>D:\sdk\boost_1_66_0;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\sdk\boost_1_66_0\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>D:\sdk\boost_1_66_0;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\sdk\boost_1_66_0\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -151,16 +159,34 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CBody.h" />
+    <ClInclude Include="CBodyControl.h" />
+    <ClInclude Include="CCompound.h" />
+    <ClInclude Include="CCone.h" />
+    <ClInclude Include="CCylinder.h" />
+    <ClInclude Include="CParallelepiped.h" />
+    <ClInclude Include="CSolidBody.h" />
+    <ClInclude Include="CSphere.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="util.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="3dbody.cpp" />
+    <ClCompile Include="CBody.cpp" />
+    <ClCompile Include="CBodyControl.cpp" />
+    <ClCompile Include="CCompound.cpp" />
+    <ClCompile Include="CCone.cpp" />
+    <ClCompile Include="CCylinder.cpp" />
+    <ClCompile Include="CParallelepiped.cpp" />
+    <ClCompile Include="CSolidBody.cpp" />
+    <ClCompile Include="CSphere.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="util.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
