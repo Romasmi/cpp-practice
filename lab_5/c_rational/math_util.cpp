@@ -25,5 +25,11 @@ int GCD(int a, int b)
 
 int LCM(int a, int b)
 {
+	int gcd = GCD(a, b);
+	if (gcd == 0)
+	{
+		return 0;
+	}
+
 	return abs(a * b) / GCD(a, b);
 }

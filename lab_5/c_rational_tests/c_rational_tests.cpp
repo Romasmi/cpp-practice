@@ -1,8 +1,10 @@
 #include "pch.h"
 
 #include "../c_rational/CRational.h"
+#include "../c_rational/math_util.h"
 #include <iostream>
 #include <sstream>
+#include <utility>
 
 using namespace std;
 
@@ -40,8 +42,8 @@ SCENARIO("rational number can be constructed by inputing 0, 1 or 2 parameters")
 
 			THEN("it creates number = 10/5 or 2")
 			{
-				REQUIRE(n1.GetNumerator() == 10);
-				REQUIRE(n1.GetDenominator() == 5);
+				REQUIRE(n1.GetNumerator() == 2);
+				REQUIRE(n1.GetDenominator() == 1);
 				REQUIRE(n1.ToDouble() == 2);
 			}
 		}
@@ -87,8 +89,8 @@ SCENARIO("check unary + and -")
 
 		THEN("it changes numerator sign")
 		{
-			REQUIRE(n.GetNumerator() == -10);
-			REQUIRE(n.GetDenominator() == 5);
+			REQUIRE(n.GetNumerator() == -2);
+			REQUIRE(n.GetDenominator() == 1);
 		}
 	}
 
@@ -98,8 +100,8 @@ SCENARIO("check unary + and -")
 
 		THEN("it doesn't changes numerator sign")
 		{
-			REQUIRE(n.GetNumerator() == 10);
-			REQUIRE(n.GetDenominator() == 5);
+			REQUIRE(n.GetNumerator() == 2);
+			REQUIRE(n.GetDenominator() == 1);
 		}
 	}
 }
@@ -370,6 +372,25 @@ SCENARIO("check /=")
 			REQUIRE(n1.GetDenominator() == 5);
 		}
 	}
+
+	WHEN("devide n1 by 0")
+	{
+		THEN("it throws an exception")
+		{
+			try
+			{
+				n1 /= 0;
+				REQUIRE(false);
+			}
+			catch (const exception& e)
+			{
+				cout << e.what() << '\n';
+				REQUIRE(true);
+				REQUIRE(n1.GetNumerator() == 2);
+				REQUIRE(n1.GetDenominator() == 1);
+			}
+		}
+	}
 }
 
 SCENARIO("check boolean ==")
@@ -507,8 +528,8 @@ SCENARIO("check <")
 
 			REQUIRE(n1.GetNumerator() == 3);
 			REQUIRE(n1.GetDenominator() == 5);
-			REQUIRE(n2.GetNumerator() == 2);
-			REQUIRE(n2.GetDenominator() == 4);
+			REQUIRE(n2.GetNumerator() == 1);
+			REQUIRE(n2.GetDenominator() == 2);
 		}
 	}
 
@@ -552,8 +573,8 @@ SCENARIO("check >")
 
 			REQUIRE(n1.GetNumerator() == 3);
 			REQUIRE(n1.GetDenominator() == 5);
-			REQUIRE(n2.GetNumerator() == 2);
-			REQUIRE(n2.GetDenominator() == 4);
+			REQUIRE(n2.GetNumerator() == 1);
+			REQUIRE(n2.GetDenominator() == 2);
 		}
 	}
 
@@ -597,8 +618,8 @@ SCENARIO("check >=")
 
 			REQUIRE(n1.GetNumerator() == 3);
 			REQUIRE(n1.GetDenominator() == 5);
-			REQUIRE(n2.GetNumerator() == 2);
-			REQUIRE(n2.GetDenominator() == 4);
+			REQUIRE(n2.GetNumerator() == 1);
+			REQUIRE(n2.GetDenominator() == 2);
 		}
 	}
 
@@ -613,8 +634,8 @@ SCENARIO("check >=")
 
 			REQUIRE(n1.GetNumerator() == 3);
 			REQUIRE(n1.GetDenominator() == 5);
-			REQUIRE(n2.GetNumerator() == 6);
-			REQUIRE(n2.GetDenominator() == 10);
+			REQUIRE(n2.GetNumerator() == 3);
+			REQUIRE(n2.GetDenominator() == 5);
 		}
 	}
 
@@ -658,8 +679,8 @@ SCENARIO("check <=")
 
 			REQUIRE(n1.GetNumerator() == 3);
 			REQUIRE(n1.GetDenominator() == 5);
-			REQUIRE(n2.GetNumerator() == 2);
-			REQUIRE(n2.GetDenominator() == 4);
+			REQUIRE(n2.GetNumerator() == 1);
+			REQUIRE(n2.GetDenominator() == 2);
 		}
 	}
 
@@ -674,8 +695,8 @@ SCENARIO("check <=")
 
 			REQUIRE(n1.GetNumerator() == 3);
 			REQUIRE(n1.GetDenominator() == 5);
-			REQUIRE(n2.GetNumerator() == 6);
-			REQUIRE(n2.GetDenominator() == 10);
+			REQUIRE(n2.GetNumerator() == 3);
+			REQUIRE(n2.GetDenominator() == 5);
 		}
 	}
 
@@ -771,6 +792,48 @@ SCENARIO("check <<")
 
 			REQUIRE(n.GetNumerator() == 3);
 			REQUIRE(n.GetDenominator() == 1);
+		}
+	}
+}
+
+SCENARIO("check convertion to Compound fraction")
+{
+	WHEN("convert 9/5")
+	{
+		CRational n(9, 5);
+		THEN("get 1 and 4/5")
+		{
+			REQUIRE(n.ToCompoundFraction() == make_pair<int, CRational>(1, CRational(4, 5)));
+		}
+	}
+
+	WHEN("convert 4/5")
+	{
+		CRational n(4, 5);
+		THEN("get 0 and 4/5")
+		{
+			REQUIRE(n.ToCompoundFraction() == make_pair<int, CRational>(0, CRational(4, 5)));
+		}
+	}
+
+
+	WHEN("convert -9/5")
+	{
+		CRational n(-9, 5);
+		THEN("get 1 and -4/5")
+		{
+			REQUIRE(n.ToCompoundFraction() == make_pair<int, CRational>(1, CRational(-4, 5)));
+		}
+	}
+}
+
+SCENARIO("check getting of GCD")
+{
+	WHEN("try to get GCD of natural number and zero")
+	{
+		THEN("it returns zero")
+		{
+			REQUIRE(LCM(0, 5) == 0);
 		}
 	}
 }
