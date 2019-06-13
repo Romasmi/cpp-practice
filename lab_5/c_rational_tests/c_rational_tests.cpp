@@ -111,7 +111,7 @@ SCENARIO("check binary +")
 	CRational n1(10, 5);
 	CRational n2(3, 7);
 
-	WHEN("adjuct n2 to n1")
+	WHEN("add n2 to n1")
 	{
 		n1 = n1 + n2;
 
@@ -122,7 +122,7 @@ SCENARIO("check binary +")
 		}
 	}
 
-	WHEN("adjuct const number to n1")
+	WHEN("add const number to n1")
 	{
 		n1 = n1 + 5;
 
@@ -133,7 +133,7 @@ SCENARIO("check binary +")
 		}
 	}
 
-	WHEN("adjuct n1 to const number")
+	WHEN("add n1 to const number")
 	{
 		n1 = 5 + n1;
 
@@ -150,7 +150,7 @@ SCENARIO("check +=")
 	CRational n1(10, 5);
 	CRational n2(3, 7);
 
-	WHEN("adjuct n2 to n1")
+	WHEN("add n2 to n1")
 	{
 		n1 += n2;
 
@@ -161,7 +161,7 @@ SCENARIO("check +=")
 		}
 	}
 
-	WHEN("adjuct 5 to n1")
+	WHEN("add 5 to n1")
 	{
 		n1 += 5;
 
@@ -743,7 +743,7 @@ SCENARIO("check convertion to Compound fraction")
 		CRational n(-9, 5);
 		THEN("get intPart and negative normal rational number")
 		{
-			REQUIRE(n.ToCompoundFraction() == make_pair<int, CRational>(1, CRational(-4, 5)));
+			REQUIRE(n.ToCompoundFraction() == make_pair<int, CRational>(-1, CRational(-4, 5)));
 		}
 	}
 

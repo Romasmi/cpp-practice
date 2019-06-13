@@ -8,8 +8,7 @@
 class CRational final
 {
 public:
-	CRational();
-	CRational(const int numerator, const int denominator = 1);
+	CRational(const int numerator = 0, const int denominator = 1);
 	int GetNumerator() const;
 	int GetDenominator() const;
 	double ToDouble() const;

@@ -7,19 +7,13 @@
 
 using namespace std;
 
-CRational::CRational()
-	: m_numerator(0)
-	, m_denominator(1)
-{
-}
-
 CRational::CRational(const int numerator, const int denominator)
 	: m_numerator(numerator)
 	, m_denominator(denominator)
 {
 	if (m_denominator == 0)
 	{
-		throw std::overflow_error("Divide by zero exception");
+		throw std::invalid_argument("Denominator can't equal to zero");
 	}
 	Normalize();
 }
@@ -173,19 +167,9 @@ std::ostream& operator<<(std::ostream& output, const CRational& n)
 
 std::pair<int, CRational> CRational::ToCompoundFraction() const
 {
-	const int intPart = (int)(floor(abs(ToDouble())));
+	const int intPart = static_cast<int>(ToDouble());
 	const int remainder = intPart * GetDenominator();
-
-	int numerator;
-	if (GetNumerator() != 0)
-	{
-		numerator = GetNumerator() > 0 ? GetNumerator() - remainder : GetNumerator() + remainder;
-	}
-	else
-	{
-		numerator = GetNumerator();
-	}
-
+	const int numerator = GetNumerator() - GetDenominator() * intPart;
 	const CRational n(numerator, GetDenominator());
 	return make_pair(intPart, n);
 }
