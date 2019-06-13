@@ -816,7 +816,6 @@ SCENARIO("check convertion to Compound fraction")
 		}
 	}
 
-
 	WHEN("convert -9/5")
 	{
 		CRational n(-9, 5);
@@ -825,11 +824,20 @@ SCENARIO("check convertion to Compound fraction")
 			REQUIRE(n.ToCompoundFraction() == make_pair<int, CRational>(1, CRational(-4, 5)));
 		}
 	}
+
+	WHEN("convert 0")
+	{
+		CRational n(0);
+		THEN("get 0 and 0/1")
+		{
+			REQUIRE(n.ToCompoundFraction() == make_pair<int, CRational>(0, CRational(0, 1)));
+		}
+	}
 }
 
-SCENARIO("check getting of GCD")
+SCENARIO("check getting of LCM")
 {
-	WHEN("try to get GCD of natural number and zero")
+	WHEN("try to get LCM of natural number and zero")
 	{
 		THEN("it returns zero")
 		{
