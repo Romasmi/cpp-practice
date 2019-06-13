@@ -14,7 +14,7 @@ SCENARIO("rational number can be constructed by inputing 0, 1 or 2 parameters")
 	{
 		CRational n1;
 
-		THEN("it creates number = 0/1 or 0")
+		THEN("it creates rational number with zero numerator")
 		{
 			REQUIRE(n1.GetNumerator() == 0);
 			REQUIRE(n1.GetDenominator() == 1);
@@ -26,7 +26,7 @@ SCENARIO("rational number can be constructed by inputing 0, 1 or 2 parameters")
 	{
 		CRational n1(10);
 
-		THEN("it creates number = 10/1 or 10")
+		THEN("it creates rational number with numerator equal to parameter and denominator equal to 1")
 		{
 			REQUIRE(n1.GetNumerator() == 10);
 			REQUIRE(n1.GetDenominator() == 1);
@@ -40,7 +40,7 @@ SCENARIO("rational number can be constructed by inputing 0, 1 or 2 parameters")
 		{
 			CRational n1(10, 5);
 
-			THEN("it creates number = 10/5 or 2")
+			THEN("it creates rational number with numerator equal to the first parameter and denominator equal to the second parameter")
 			{
 				REQUIRE(n1.GetNumerator() == 2);
 				REQUIRE(n1.GetDenominator() == 1);
@@ -50,7 +50,7 @@ SCENARIO("rational number can be constructed by inputing 0, 1 or 2 parameters")
 
 		WHEN("to input 1 whole number and 0 as parameters")
 		{
-			THEN("it throw exception")
+			THEN("it throw exception because denaminator can't equal to zero")
 			{
 				try
 				{
@@ -69,10 +69,10 @@ SCENARIO("rational number can be constructed by inputing 0, 1 or 2 parameters")
 
 SCENARIO("check convertion to double")
 {
-	WHEN("convert  3/5 ot double")
+	WHEN("convert number to double")
 	{
 		CRational n(3, 5);
-		THEN("get 0.6")
+		THEN("get float number")
 		{
 			REQUIRE(n.ToDouble() == 0.6);
 		}
@@ -122,22 +122,22 @@ SCENARIO("check binary +")
 		}
 	}
 
-	WHEN("adjuct 5 to n1")
+	WHEN("adjuct const number to n1")
 	{
 		n1 = n1 + 5;
 
-		THEN("it increases n1 on 5")
+		THEN("it increases n1 on const number")
 		{
 			REQUIRE(n1.GetNumerator() == 7);
 			REQUIRE(n1.GetDenominator() == 1);
 		}
 	}
 
-	WHEN("adjuct n1 to 5")
+	WHEN("adjuct n1 to const number")
 	{
 		n1 = 5 + n1;
 
-		THEN("it return 5 + n1 = 35/5 = 7/1")
+		THEN("it return sum of n1 and const number")
 		{
 			REQUIRE(n1.GetNumerator() == 7);
 			REQUIRE(n1.GetDenominator() == 1);
@@ -165,7 +165,7 @@ SCENARIO("check +=")
 	{
 		n1 += 5;
 
-		THEN("it increases n1 on 5")
+		THEN("it increases n1 on const number")
 		{
 			REQUIRE(n1.GetNumerator() == 7);
 			REQUIRE(n1.GetDenominator() == 1);
@@ -189,22 +189,22 @@ SCENARIO("check binary -")
 		}
 	}
 
-	WHEN("substruct 5 from n1")
+	WHEN("substruct const number from n1")
 	{
 		n1 = n1 - 5;
 
-		THEN("it decrease n1 on 5")
+		THEN("it decrease n1 on const number")
 		{
 			REQUIRE(n1.GetNumerator() == -3);
 			REQUIRE(n1.GetDenominator() == 1);
 		}
 	}
 
-	WHEN("substruct n1 from 5/3")
+	WHEN("substruct n1 from const number")
 	{
 		n1 = 5 - n1;
 
-		THEN("it return 5 - n1 = 15/5 = 3/1")
+		THEN("it return substraction of const number and n1")
 		{
 			REQUIRE(n1.GetNumerator() == 3);
 			REQUIRE(n1.GetDenominator() == 1);
@@ -228,11 +228,11 @@ SCENARIO("check -=")
 		}
 	}
 
-	WHEN("substruct 5 from n1")
+	WHEN("substruct const number from n1")
 	{
 		n1 -= 5;
 
-		THEN("it decrease n1 on 5")
+		THEN("it decrease n1 on const number")
 		{
 			REQUIRE(n1.GetNumerator() == -3);
 			REQUIRE(n1.GetDenominator() == 1);
@@ -256,7 +256,7 @@ SCENARIO("check binary *")
 		}
 	}
 
-	WHEN("multiply 5 and n1")
+	WHEN("multiply const number and n1")
 	{
 		n1 = 5 * n1;
 
@@ -267,7 +267,7 @@ SCENARIO("check binary *")
 		}
 	}
 
-	WHEN("multiply n1 and 5")
+	WHEN("multiply n1 and const number")
 	{
 		n1 = n1 * 5;
 
@@ -295,7 +295,7 @@ SCENARIO("check binary *=")
 		}
 	}
 
-	WHEN("multiply n1 and 5")
+	WHEN("multiply n1 and const number")
 	{
 		n1 *= 5;
 
@@ -323,7 +323,7 @@ SCENARIO("check binary /")
 		}
 	}
 
-	WHEN("devide 5 by n1")
+	WHEN("devide const number by n1")
 	{
 		n1 = 5 / n1;
 
@@ -334,7 +334,7 @@ SCENARIO("check binary /")
 		}
 	}
 
-	WHEN("devide n1 by 5")
+	WHEN("devide n1 by const number")
 	{
 		n1 = n1 / 5;
 
@@ -362,7 +362,7 @@ SCENARIO("check /=")
 		}
 	}
 
-	WHEN("devide n1 by 5")
+	WHEN("devide n1 by const number")
 	{
 		n1 /= 5;
 
@@ -373,7 +373,7 @@ SCENARIO("check /=")
 		}
 	}
 
-	WHEN("devide n1 by 0")
+	WHEN("devide n1 by zero")
 	{
 		THEN("it throws an exception")
 		{
@@ -411,7 +411,7 @@ SCENARIO("check boolean ==")
 		}
 	}
 
-	WHEN("check equality of 1/2 and 2/3")
+	WHEN("check equality of not equal numbers")
 	{
 		CRational n1(1, 2);
 		CRational n2(2, 3);
@@ -427,7 +427,7 @@ SCENARIO("check boolean ==")
 		}
 	}
 
-	WHEN("check equality of 4/1 and 4")
+	WHEN("check equality of equal numbers")
 	{
 		CRational n(4, 1);
 
@@ -439,24 +439,11 @@ SCENARIO("check boolean ==")
 			REQUIRE(n.GetDenominator() == 1);
 		}
 	}
-
-	WHEN("check equality of 4 and 4/1")
-	{
-		CRational n(4, 1);
-
-		THEN("it returns true")
-		{
-			REQUIRE(4 == n);
-
-			REQUIRE(n.GetNumerator() == 4);
-			REQUIRE(n.GetDenominator() == 1);
-		}
-	}
 }
 
 SCENARIO("check boolean !=")
 {
-	WHEN("check inequality of 1/2 and 1/2")
+	WHEN("check inequality of inequal numbers")
 	{
 		CRational n1(1, 2);
 		CRational n2(1, 2);
@@ -472,7 +459,7 @@ SCENARIO("check boolean !=")
 		}
 	}
 
-	WHEN("check inequality of 1/2 and 2/3")
+	WHEN("check inequality of inequal numbers")
 	{
 		CRational n1(1, 2);
 		CRational n2(2, 3);
@@ -488,7 +475,7 @@ SCENARIO("check boolean !=")
 		}
 	}
 
-	WHEN("check inequality of 4/1 and 4")
+	WHEN("check inequality of equal numbers")
 	{
 		CRational n(4, 1);
 
@@ -500,24 +487,11 @@ SCENARIO("check boolean !=")
 			REQUIRE(n.GetDenominator() == 1);
 		}
 	}
-
-	WHEN("check inequality of 4 and 4/1")
-	{
-		CRational n(4, 1);
-
-		THEN("it returns false")
-		{
-			REQUIRE_FALSE(4 != n);
-
-			REQUIRE(n.GetNumerator() == 4);
-			REQUIRE(n.GetDenominator() == 1);
-		}
-	}
 }
 
 SCENARIO("check <")
 {
-	WHEN("check < of 3/5 and 2/4")
+	WHEN("check `<` of greatest and lowest number")
 	{
 		THEN("it returns false")
 		{
@@ -533,7 +507,7 @@ SCENARIO("check <")
 		}
 	}
 
-	WHEN("check < of 3/5 and 4")
+	WHEN("check `<` of lowest and greates number")
 	{
 		THEN("it returns true")
 		{
@@ -545,24 +519,11 @@ SCENARIO("check <")
 			REQUIRE(n1.GetDenominator() == 5);
 		}
 	}
-
-	WHEN("check < of 4 and 3/5")
-	{
-		THEN("it returns false")
-		{
-			CRational n1(3, 5);
-
-			REQUIRE_FALSE(4 < n1);
-
-			REQUIRE(n1.GetNumerator() == 3);
-			REQUIRE(n1.GetDenominator() == 5);
-		}
-	}
 }
 
-SCENARIO("check >")
+SCENARIO("check `>`")
 {
-	WHEN("check > of 3/5 and 2/4")
+	WHEN("check `>` of greatest and lowest number")
 	{
 		THEN("it returns true")
 		{
@@ -578,7 +539,7 @@ SCENARIO("check >")
 		}
 	}
 
-	WHEN("check > of 3/5 and 4")
+	WHEN("check `>` of lowerst and greate number")
 	{
 		THEN("it returns false")
 		{
@@ -590,24 +551,11 @@ SCENARIO("check >")
 			REQUIRE(n1.GetDenominator() == 5);
 		}
 	}
-
-	WHEN("check > of 4 and 3/5")
-	{
-		THEN("it returns false")
-		{
-			CRational n1(3, 5);
-
-			REQUIRE(4 > n1);
-
-			REQUIRE(n1.GetNumerator() == 3);
-			REQUIRE(n1.GetDenominator() == 5);
-		}
-	}
 }
 
 SCENARIO("check >=")
 {
-	WHEN("check >= of 3/5 and 2/4")
+	WHEN("check `>=` of grestest and lowest number")
 	{
 		THEN("it returns true")
 		{
@@ -623,7 +571,7 @@ SCENARIO("check >=")
 		}
 	}
 
-	WHEN("check >= of 3/5 and 6/10")
+	WHEN("check `>=` of equal numbers")
 	{
 		THEN("it returns true")
 		{
@@ -639,7 +587,7 @@ SCENARIO("check >=")
 		}
 	}
 
-	WHEN("check >= of 3/5 and 4")
+	WHEN("check `>=` of lowerst and greates number")
 	{
 		THEN("it returns false")
 		{
@@ -651,24 +599,11 @@ SCENARIO("check >=")
 			REQUIRE(n1.GetDenominator() == 5);
 		}
 	}
-
-	WHEN("check >= of 4 and 3/5")
-	{
-		THEN("it returns true")
-		{
-			CRational n1(3, 5);
-
-			REQUIRE(4 >= n1);
-
-			REQUIRE(n1.GetNumerator() == 3);
-			REQUIRE(n1.GetDenominator() == 5);
-		}
-	}
 }
 
-SCENARIO("check <=")
+SCENARIO("check `<=`")
 {
-	WHEN("check <= of 3/5 and 2/4")
+	WHEN("check `<=` of greates and lowerst number")
 	{
 		THEN("it returns false")
 		{
@@ -684,7 +619,7 @@ SCENARIO("check <=")
 		}
 	}
 
-	WHEN("check <= of 3/5 and 6/10")
+	WHEN("check `<=` of equal numbers")
 	{
 		THEN("it returns true")
 		{
@@ -700,20 +635,7 @@ SCENARIO("check <=")
 		}
 	}
 
-	WHEN("check <= of 3/5 and 4")
-	{
-		THEN("it returns true")
-		{
-			CRational n1(3, 5);
-
-			REQUIRE(n1 <= 4);
-
-			REQUIRE(n1.GetNumerator() == 3);
-			REQUIRE(n1.GetDenominator() == 5);
-		}
-	}
-
-	WHEN("check <= of 4 and 3/5")
+	WHEN("check `<=` of greates and lowest number")
 	{
 		THEN("it returns false")
 		{
@@ -765,7 +687,7 @@ SCENARIO("check >>")
 
 SCENARIO("check <<")
 {
-	WHEN("apply << for 3/5")
+	WHEN("apply `<<` for rational number")
 	{
 		ostringstream output;
 		CRational n(3, 5);
@@ -780,7 +702,7 @@ SCENARIO("check <<")
 		}
 	}
 
-	WHEN("apply << for 3")
+	WHEN("apply << for const int number")
 	{
 		ostringstream output;
 		CRational n(3);
@@ -798,37 +720,37 @@ SCENARIO("check <<")
 
 SCENARIO("check convertion to Compound fraction")
 {
-	WHEN("convert 9/5")
+	WHEN("convert rational number with intPart")
 	{
 		CRational n(9, 5);
-		THEN("get 1 and 4/5")
+		THEN("get intPart and normal rational number")
 		{
 			REQUIRE(n.ToCompoundFraction() == make_pair<int, CRational>(1, CRational(4, 5)));
 		}
 	}
 
-	WHEN("convert 4/5")
+	WHEN("convert rational number without intPart")
 	{
 		CRational n(4, 5);
-		THEN("get 0 and 4/5")
+		THEN("get 0 as intPart and normal rational number")
 		{
 			REQUIRE(n.ToCompoundFraction() == make_pair<int, CRational>(0, CRational(4, 5)));
 		}
 	}
 
-	WHEN("convert -9/5")
+	WHEN("convert negative retional number with intPart")
 	{
 		CRational n(-9, 5);
-		THEN("get 1 and -4/5")
+		THEN("get intPart and negative normal rational number")
 		{
 			REQUIRE(n.ToCompoundFraction() == make_pair<int, CRational>(1, CRational(-4, 5)));
 		}
 	}
 
-	WHEN("convert 0")
+	WHEN("convert zero")
 	{
 		CRational n(0);
-		THEN("get 0 and 0/1")
+		THEN("get zero and 0/1")
 		{
 			REQUIRE(n.ToCompoundFraction() == make_pair<int, CRational>(0, CRational(0, 1)));
 		}
