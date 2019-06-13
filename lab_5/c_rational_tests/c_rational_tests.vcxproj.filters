@@ -18,10 +18,10 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CRational.h">
+    <ClInclude Include="..\c_rational\CRational.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="math_util.h">
+    <ClInclude Include="..\c_rational\math_util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -29,13 +29,16 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="c_rational.cpp">
+    <ClCompile Include="c_rational_tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CRational.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="math_util.cpp">
+    <ClCompile Include="..\c_rational\CRational.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\c_rational\math_util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
