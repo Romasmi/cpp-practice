@@ -18,13 +18,10 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CHttpUrl.h">
+    <ClInclude Include="..\http_url\CHttpUrl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CUrlParsingError.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="util.h">
+    <ClInclude Include="..\http_url\CUrlParsingError.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -32,13 +29,16 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="http_url_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CHttpUrl.cpp">
+    <ClCompile Include="..\http_url\CHttpUrl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CUrlParsingError.cpp">
+    <ClCompile Include="..\http_url\CUrlParsingError.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
