@@ -23,6 +23,7 @@ public:
 	std::string GetDomain() const;
 	std::string GetDocument() const;
 	Protocol GetProtocol() const;
+	std::string GetProtocolInString() const;
 	Port GetPort() const;
 
 public:
@@ -36,7 +37,6 @@ private:
 	Port m_port;
 
 private:
-	std::string GetProtocolInString() const;
 	Port GetDefaultProtocolPort() const;
 	std::string GetProcessedDocument(const std::string& document) const;
 };
