@@ -62,7 +62,7 @@ catch (const CUrlParsingError& e)
 CHttpUrl::CHttpUrl(std::string const& domain, std::string const& document,
 	Protocol protocol) try
 {
-	string url = PROTOCOL_IN_STRING.at(protocol) + "://" + domain + GetProcessedDocument(document);
+	string url = PROTOCOL_IN_STRING.at(protocol) + "://" + domain + ProcessDocument(document);
 	CHttpUrl parsedUrl(url);
 
 	m_protocol = parsedUrl.GetProtocol();
@@ -127,7 +127,7 @@ std::string CHttpUrl::ProcessDocument(const string& document)
 
 void CHttpUrl::ValidatePort(Port port) const
 {
-	if (!(port >= MIN_PORT && port <= MAX_PORT))
+	if (!(Between<Port>(port, MIN_PORT, MAX_PORT)))
 	{
 	    throw CUrlParsingError("incorrect port value");
 	}

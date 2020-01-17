@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 template <class T>
 bool Between(const T& item, const T& min, const T& max)
 {
