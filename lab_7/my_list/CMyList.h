@@ -8,7 +8,7 @@ class CMyList
 public:
 	CMyList()
 	{
-		
+				
 	}
 
 	~CMyList()

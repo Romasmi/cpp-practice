@@ -84,9 +84,9 @@ SCENARIO("test FindMaxEx with Less function and vector of students")
 		Mikki,
 		Alex });
 
-	WHEN("try to find the talles student")
+	WHEN("try to find the tallest student")
 	{
-		THEN("get the talles student")
+		THEN("get the tallest student")
 		{
 			Student maxHeightStudent;
 			REQUIRE(FindMaxEx(students, maxHeightStudent, LessByHeight));
