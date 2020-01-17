@@ -16,9 +16,8 @@ SCENARIO("check url parsing")
 			try
 			{
 				CHttpUrl url("hello world");
-				REQUIRE(false);
 			}
-			catch (const exception& e)
+			catch (const CUrlParsingError& e)
 			{
 				cout << e.what() << endl;
 				REQUIRE(true);
@@ -33,9 +32,8 @@ SCENARIO("check url parsing")
 			try
 			{
 				CHttpUrl url("vk.com");
-				REQUIRE(false);
 			}
-			catch (const exception& e)
+			catch (const CUrlParsingError& e)
 			{
 				cout << e.what() << endl;
 				REQUIRE(true);
@@ -50,9 +48,8 @@ SCENARIO("check url parsing")
 			try
 			{
 				CHttpUrl url("http://");
-				REQUIRE(false);
 			}
-			catch (const exception& e)
+			catch (const CUrlParsingError& e)
 			{
 				cout << e.what() << endl;
 				REQUIRE(true);
@@ -67,9 +64,8 @@ SCENARIO("check url parsing")
 			try
 			{
 				CHttpUrl url("http2://vk.com");
-				REQUIRE(false);
 			}
-			catch (const exception& e)
+			catch (const CUrlParsingError& e)
 			{
 				cout << e.what() << endl;
 				REQUIRE(true);
@@ -129,7 +125,7 @@ SCENARIO("check url parsing")
 				REQUIRE(url.GetDocument() == "/friend/favourite");
 				REQUIRE(url.GetPort() == 80);
 			}
-			catch (const exception& e)
+			catch (const CUrlParsingError& e)
 			{
 				cout << e.what() << endl;
 				REQUIRE(false);
@@ -147,9 +143,8 @@ SCENARIO("set url by passing parts of url")
 			try
 			{
 				CHttpUrl url("/vk*com", "music", Protocol::HTTPS);
-				REQUIRE(false);
 			}
-			catch (const exception& e)
+			catch (const CUrlParsingError& e)
 			{
 				cout << e.what() << endl;
 				REQUIRE(true);
@@ -157,7 +152,7 @@ SCENARIO("set url by passing parts of url")
 		}
 	}
 
-	WHEN("set document domain")
+	WHEN("set incorrect document")
 	{
 		THEN("get exception")
 		{
@@ -166,7 +161,7 @@ SCENARIO("set url by passing parts of url")
 				CHttpUrl url("vk.com", "music&photos", Protocol::HTTPS);
 				REQUIRE(false);
 			}
-			catch (const exception& e)
+			catch (const CUrlParsingError& e)
 			{
 				cout << e.what() << endl;
 				REQUIRE(true);
@@ -186,10 +181,184 @@ SCENARIO("set url by passing parts of url")
 				REQUIRE(url.GetDocument() == "/music");
 				REQUIRE(url.GetPort() == 80);
 			}
-			catch (const exception& e)
+			catch (const CUrlParsingError& e)
 			{
 				cout << e.what() << endl;
 				REQUIRE(false);
+			}
+		}
+	}
+}
+
+SCENARIO("check getting of url entirely")
+{
+	WHEN("set url without port")
+	{
+		THEN("get url without port")
+		{
+			try
+			{
+				CHttpUrl url("http://vk.com/music");
+				REQUIRE(url.GetURL() == "http://vk.com/music");
+			}
+			catch (const CUrlParsingError& e)
+			{
+				cout << e.what() << endl;
+				REQUIRE(false);
+			}
+		}
+	}
+	WHEN("set url without default port")
+	{
+		THEN("get url without port")
+		{
+			try
+			{
+				CHttpUrl url("http://vk.com/music:80");
+				REQUIRE(url.GetURL() == "http://vk.com/music");
+			}
+			catch (const CUrlParsingError& e)
+			{
+				cout << e.what() << endl;
+				REQUIRE(false);
+			}
+		}
+	}
+
+	WHEN("set url with not default port")
+	{
+		THEN("get url with port")
+		{
+			try
+			{
+				CHttpUrl url("http://vk.com/music:85");
+				REQUIRE(url.GetURL() == "http://vk.com/music:85");
+			}
+			catch (const CUrlParsingError& e)
+			{
+				cout << e.what() << endl;
+				REQUIRE(false);
+			}
+		}
+	}
+
+	WHEN("set url by passing parts without port")
+	{
+		THEN("get url without port")
+		{
+			try
+			{
+				CHttpUrl url("vk.com", "music");
+				REQUIRE(url.GetURL() == "http://vk.com/music");
+			}
+			catch (const CUrlParsingError& e)
+			{
+				cout << e.what() << endl;
+				REQUIRE(false);
+			}
+		}
+	}
+	WHEN("set url by passing parts with default port")
+	{
+		THEN("get url without port")
+		{
+			try
+			{
+				CHttpUrl url("vk.com", "music", Protocol::HTTPS, 443);
+				REQUIRE(url.GetURL() == "https://vk.com/music");
+			}
+			catch (const CUrlParsingError& e)
+			{
+				cout << e.what() << endl;
+				REQUIRE(false);
+			}
+		}
+	}
+
+	WHEN("set url by passing parts with no default port")
+	{
+		THEN("get url with port")
+		{
+			try
+			{
+				CHttpUrl url("vk.com", "music", Protocol::HTTPS, 445);
+				REQUIRE(url.GetURL() == "https://vk.com/music:445");
+			}
+			catch (const CUrlParsingError& e)
+			{
+				cout << e.what() << endl;
+				REQUIRE(false);
+			}
+		}
+	}
+}
+
+SCENARIO("check port bounrady values")
+{
+	WHEN("set min port value")
+	{
+		THEN("get correct url")
+		{
+			try
+			{
+				CHttpUrl url("vk.com", "music", Protocol::HTTPS, 1);
+				REQUIRE(url.GetURL() == "https://vk.com/music:1");
+			}
+			catch (const CUrlParsingError& e)
+			{
+				cout << e.what() << endl;
+				REQUIRE(false);
+			}
+		}
+	}
+
+	WHEN("set min - 1 port value")
+	{
+		THEN("get exception")
+		{
+			try
+			{
+				CHttpUrl url("vk.com", "music", Protocol::HTTPS, 0);
+				REQUIRE(url.GetURL() == "https://vk.com/music");
+			}
+			catch (const CUrlParsingError& e)
+			{
+				cout << e.what() << endl;
+				REQUIRE(true);
+			}
+		}
+	}
+
+	WHEN("set max port value")
+	{
+		THEN("get correct url")
+		{
+			try
+			{
+				CHttpUrl url("vk.com", "music", Protocol::HTTPS, USHRT_MAX);
+				REQUIRE(url.GetURL() == "https://vk.com/music:" + std::to_string(USHRT_MAX));
+			}
+			catch (const CUrlParsingError& e)
+			{
+				cout << e.what() << endl;
+				REQUIRE(false);
+			}
+		}
+	}
+
+	WHEN("set max + 1 port value")
+	{
+		THEN("get exception")
+		{
+			try
+			{
+				CHttpUrl url("vk.com", "music", Protocol::HTTPS, USHRT_MAX + 1);
+				REQUIRE(url.GetURL() == "https://vk.com/music");
+			}
+			catch (const CUrlParsingError& e)
+			{
+				cout << e.what() << endl;
+				REQUIRE(true);
 			}
 		}
 	}

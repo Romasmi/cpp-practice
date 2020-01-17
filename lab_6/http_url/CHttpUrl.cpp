@@ -35,24 +35,26 @@ CHttpUrl::CHttpUrl(std::string const& url) try
 	{
 		throw CUrlParsingError("Invalid url");
 	}
-	ssub_match urlPart = urlParts[1];
-	m_protocol = STRING_TO_PROTOCOL.at(urlPart.str());
-	urlPart = urlParts[2];
-	m_domain = urlPart.str();
-	urlPart = urlParts[3];
-	m_document = urlPart.str();
-	urlPart = urlParts[4];
-	if (urlPart.str().size() > 0)
+	ssub_match protocolMatch = urlParts[1];
+	ssub_match domainMatch = urlParts[2];
+	ssub_match documentMatch = urlParts[3];
+	ssub_match portMatch = urlParts[4];
+
+	m_protocol = STRING_TO_PROTOCOL.at(protocolMatch.str());
+	m_domain = domainMatch.str();
+	m_document = documentMatch.str();
+	if (portMatch.str().size() > 0)
 	{
-		const string port = urlPart.str().substr(1);
+		const string port = portMatch.str().substr(1);
 		m_port = static_cast<Port>(stoi(port));
 	}
 	else
 	{
 		m_port = PROTOCOL_PORT.at(m_protocol);
 	}
+	ValidatePort(m_port);
 }
-catch (const exception& e)
+catch (const CUrlParsingError& e)
 {
 	throw e;
 }
@@ -68,7 +70,7 @@ CHttpUrl::CHttpUrl(std::string const& domain, std::string const& document,
 	m_document = parsedUrl.GetDocument();
 	m_port = parsedUrl.GetPort();
 }
-catch (const invalid_argument& e)
+catch (const CUrlParsingError& e)
 {
 	throw e;
 }
@@ -77,6 +79,8 @@ CHttpUrl::CHttpUrl(std::string const& domain, std::string const& document,
 	Protocol protocol, Port port) 
 	try
 {
+	ValidatePort(port);
+
 	CHttpUrl parsedUrl(domain, document, protocol);
 	m_protocol = parsedUrl.GetProtocol();
 	m_domain = parsedUrl.GetDomain();
@@ -90,10 +94,10 @@ catch (const CUrlParsingError& e)
 
 std::string CHttpUrl::GetURL() const
 {
-	string url = GetProtocolInString() + "://" + GetDomain() + GetDocument();
-	if (GetProtocol() != GetDefaultProtocolPort())
+	string url = ProtocolToString(GetProtocol()) + "://" + GetDomain() + GetDocument();
+	if (GetPort() != GetDefaultProtocolPort())
 	{
-		url += ':' + GetPort();
+		url += ":" +  std::to_string(GetPort());
 	}
 	return url;
 }
@@ -106,9 +110,9 @@ Protocol CHttpUrl::GetProtocol() const { return m_protocol; }
 
 Port CHttpUrl::GetPort() const { return m_port; }
 
-std::string CHttpUrl::GetProtocolInString() const
+std::string CHttpUrl::ProtocolToString(Protocol protocol)
 {
-	return PROTOCOL_IN_STRING.at(m_protocol);
+	return PROTOCOL_IN_STRING.at(protocol);
 }
 
 Port CHttpUrl::GetDefaultProtocolPort() const
@@ -116,7 +120,15 @@ Port CHttpUrl::GetDefaultProtocolPort() const
 	return PROTOCOL_PORT.at(m_protocol);
 }
 
-string CHttpUrl::GetProcessedDocument(const string& document) const
+std::string CHttpUrl::ProcessDocument(const string& document)
 {
 	return document[0] == '/' ? document : '/' + document;
+}
+
+void CHttpUrl::ValidatePort(Port port) const
+{
+	if (!(port >= MIN_PORT && port <= MAX_PORT))
+	{
+	    throw CUrlParsingError("incorrect port value");
+	}
 }

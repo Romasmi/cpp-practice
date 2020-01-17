@@ -16,7 +16,7 @@ int main()
 		try
 		{
 			CHttpUrl url(str);
-			cout << "Protocol: " << url.GetProtocolInString() << '\n'; 
+			cout << "Protocol: " << url.ProtocolToString(url.GetProtocol()) << '\n'; 
 			cout << "Domain: " << url.GetDomain() << '\n'; 
 			cout << "Document: " << url.GetDocument() << '\n'; 
 			cout << "Port: " << url.GetPort() << '\n'; 

@@ -23,8 +23,9 @@ public:
 	std::string GetDomain() const;
 	std::string GetDocument() const;
 	Protocol GetProtocol() const;
-	std::string GetProtocolInString() const;
 	Port GetPort() const;
+    static std::string ProtocolToString(Protocol port);
+	static std::string ProcessDocument(const std::string& document);
 
 public:
 	const Port MIN_PORT = 1;
@@ -38,5 +39,5 @@ private:
 
 private:
 	Port GetDefaultProtocolPort() const;
-	std::string GetProcessedDocument(const std::string& document) const;
+	void ValidatePort(Port port) const;
 };
